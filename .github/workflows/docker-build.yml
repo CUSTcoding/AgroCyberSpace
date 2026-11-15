@@ -1,0 +1,45 @@
+name: Docker Build Validation
+
+on:
+  pull_request:
+    paths:
+      - 'infra/**'
+      - 'apps/**'
+      - '.github/workflows/docker-build.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: docker-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-docker-images:
+    name: Build & Validate Containers
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: backend
+            context: apps/backend
+            dockerfile: apps/backend/Dockerfile
+          - name: frontend
+            context: apps/frontend/web
+            dockerfile: infra/docker/Dockerfile.frontend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Container Image (${{ matrix.name }})
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: false
+          tags: agrospace/${{ matrix.name }}:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
