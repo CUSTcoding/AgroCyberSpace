@@ -69,3 +69,29 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 30 files already formatted
   - `mypy app scripts tests`: Success (0 issues in 27 source files)
+
+---
+
+## Passo 0.4 — Configuração do Alembic, Primeira Migração PostGIS e Fixtures de Teste
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Configuração do Alembic para migrações DDL seguras (preferindo `DATABASE_URL_DIRECT` sem pooler), criação da migração `0001` habilitando a extensão `postgis`, isolamento transacional nos testes com fixtures em `tests/conftest.py`, e validação automatizada da cadeia de migrações.
+- **Ficheiros criados/alterados:**
+  - `alembic.ini`
+  - `migrations/env.py`
+  - `migrations/script.py.mako`
+  - `migrations/versions/0001_enable_postgis.py`
+  - `migrations/__init__.py`
+  - `migrations/versions/__init__.py`
+  - `tests/conftest.py`
+  - `tests/test_migrations.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Alembic context import sem runner:* importar `get_migration_url` a partir de `migrations.env` em testes falhava com `AttributeError: module 'alembic.context' has no attribute 'config'` -> protegido com `getattr(context, "config", None)` permitindo imports em testes unitários.
+  - *Deprecation warning de path separator:* adicionado `path_separator = os` no `alembic.ini`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 17 passaram / 0 falhas (tempo: 0.20s)
+  - `alembic heads`: 0001 (head)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 36 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 33 source files)
