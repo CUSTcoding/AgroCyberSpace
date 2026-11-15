@@ -202,3 +202,31 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 57 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 53 source files)
+
+---
+
+## Passo 2.2 — Importação de Camadas Nacionais (CENACARTA 2017) e Seeds de AOI
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Registo rigoroso da ficha da fonte CENACARTA 2017 em `docs/DATA_SOURCES.md`, criação dos GeoJSONs canónicos de AOI das 3 regiões confirmadas (`seeds/aoi/{gaza,zambezia,tete}.geojson`) com buffer e `is_proposed_study_area: true` (mantendo Maputo pendente de confirmação), script de validação e importação `scripts/import_national_layers.py`, e script de seed idempotente `scripts/seed.py` para popular regiões, distritos e comunidades.
+- **Ficheiros criados/alterados:**
+  - `docs/DATA_SOURCES.md`
+  - `seeds/aoi/gaza.geojson`
+  - `seeds/aoi/zambezia.geojson`
+  - `seeds/aoi/tete.geojson`
+  - `scripts/seed.py`
+  - `scripts/import_national_layers.py`
+  - `tests/test_seeds_and_layers.py`
+  - `pyproject.toml` (adicionado `types-shapely`)
+  - `uv.lock`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *ImportError SessionLocal:* `app/core/database.py` expõe `get_session_factory()` em vez de `SessionLocal` direto -> adaptado nos scripts.
+  - *Mypy import-untyped:* shapely sem stubs de tipo -> adicionado `types-shapely` às dependências de desenvolvimento com `uv`.
+  - *Ruff E501:* linhas longas em descrições e asserções -> quebradas para limite de 100 caracteres.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 54 passaram / 0 falhas (tempo: 1.43s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 61 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 56 source files)
+

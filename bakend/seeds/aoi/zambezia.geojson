@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "name": "aoi_zambezia_mocuba_licungo",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code": "zambezia",
+        "name": "Zambézia",
+        "province": "Zambézia",
+        "description": "Mocuba e vale do Licungo",
+        "is_proposed_study_area": true,
+        "source": "CENACARTA 2017 / Proposta de Área de Estudo",
+        "target_districts": ["Mocuba", "Lugela", "Maganja da Costa"],
+        "primary_basin": "Bacia Hidrográfica do Rio Licungo",
+        "buffer_km": 10
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [36.75, -16.50],
+            [37.25, -16.50],
+            [37.40, -16.85],
+            [37.20, -17.20],
+            [36.65, -17.20],
+            [36.55, -16.85],
+            [36.75, -16.50]
+          ]
+        ]
+      }
+    }
+  ]
+}
