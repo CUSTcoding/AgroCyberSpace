@@ -123,3 +123,32 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 41 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 37 source files)
+
+---
+
+## Passos 1.2 e 1.3 — Registo, Autenticação com Argon2 e Tokens JWT (Access/Refresh)
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Implementação de hashing e verificação de senhas com Argon2id em `app/core/security.py`, emissão e validação de tokens JWT (access e refresh), tratamento uniforme de exceções de domínio (`{"error": {"code", "message", "details"}}`), schemas Pydantic de auth, serviço `AuthService`, e endpoints `POST /auth/register`, `POST /auth/login` e `POST /auth/refresh`.
+- **Ficheiros criados/alterados:**
+  - `app/core/security.py`
+  - `app/shared/exceptions/base.py`
+  - `app/shared/exceptions/__init__.py`
+  - `app/modules/auth/schemas.py`
+  - `app/modules/auth/service.py`
+  - `app/modules/auth/router.py`
+  - `app/main.py` (handlers globais de erro e montagem do router de auth)
+  - `tests/test_security.py`
+  - `tests/test_auth.py`
+  - `pyproject.toml` (adicionado `email-validator`)
+  - `uv.lock`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Ruff B904:* tratamento de exceções internas exigia encadeamento explícito com `from err` -> corrigido em `decode_token` e `refresh`.
+  - *Ruff B008:* chamadas de `Depends` em defaults de função no router -> refatorado para o padrão moderno `Annotated[..., Depends(...)]`.
+  - *StarletteDeprecationWarning:* substituído `HTTP_422_UNPROCESSABLE_ENTITY` por `HTTP_422_UNPROCESSABLE_CONTENT`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 34 passaram / 0 falhas (tempo: 0.95s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 48 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 44 source files)

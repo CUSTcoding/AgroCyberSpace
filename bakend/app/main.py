@@ -4,11 +4,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Request, Response, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.core.config import settings
 from app.core.database import check_db_health
+from app.modules.auth.router import router as auth_router
+from app.shared.exceptions import AppException
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -19,6 +23,39 @@ app = FastAPI(
     redoc_url=f"{settings.API_V1_PREFIX}/redoc",
 )
 
+
+# Standard error handler for domain exceptions
+@app.exception_handler(AppException)
+def app_exception_handler(_: Request, exc: AppException) -> JSONResponse:
+    """Format domain exceptions according to standard error schema."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": {
+                "code": exc.code,
+                "message": exc.message,
+                "details": exc.details,
+            }
+        },
+    )
+
+
+# Standard error handler for validation errors
+@app.exception_handler(RequestValidationError)
+def validation_exception_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+    """Format Pydantic validation errors according to standard error schema."""
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+        content={
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Request validation failed.",
+                "details": exc.errors(),
+            }
+        },
+    )
+
+
 # CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +64,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount API Routers
+app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/")
