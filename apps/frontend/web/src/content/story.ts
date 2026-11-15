@@ -13,9 +13,9 @@ const m1: Slide[] = [
     'Uma máquina caiu do céu! Quem será?',
     {
       replies: ask(
-        { icon: '👋', label: 'Olá!', say: 'Olá! Quem és tu?' },
-        { icon: '🚀', label: 'Essa máquina?', say: 'De onde vem essa máquina?' },
-        { icon: '😮', label: 'Estou a ver', say: 'Nunca vi nada assim.' },
+        { icon: 'hand-wave', label: 'Olá!', say: 'Olá! Quem és tu?' },
+        { icon: 'rocket', label: 'Essa máquina?', say: 'De onde vem essa máquina?' },
+        { icon: 'face-surprised', label: 'Estou a ver', say: 'Nunca vi nada assim.' },
       ),
     },
   ),
@@ -27,9 +27,9 @@ const m1: Slide[] = [
     'Aqui temos muitos problemas.',
     {
       replies: ask(
-        { icon: '🌧️', label: 'A chuva', say: 'Às vezes não sabemos quando vai chover.' },
-        { icon: '🌱', label: 'As plantas', say: 'As nossas culturas não crescem como esperávamos.' },
-        { icon: '🥵', label: 'O calor', say: 'O calor também está a prejudicar a terra.' },
+        { icon: 'cloud-rain', label: 'A chuva', say: 'Às vezes não sabemos quando vai chover.' },
+        { icon: 'sprout', label: 'As plantas', say: 'As nossas culturas não crescem como esperávamos.' },
+        { icon: 'hot-face', label: 'O calor', say: 'O calor também está a prejudicar a terra.' },
       ),
     },
   ),
@@ -42,9 +42,9 @@ const m1: Slide[] = [
     'Então este manual resolve todos os problemas?',
     {
       replies: ask(
-        { icon: '📘', label: 'Mostra o manual', say: 'Mostra-me o manual.' },
-        { icon: '🤔', label: 'Resolve tudo?', say: 'Este manual vai dizer-me como resolver todos os nossos problemas?' },
-        { icon: '🤝', label: 'Vamos juntos', say: 'Quero aprender com a comunidade.' },
+        { icon: 'book', label: 'Mostra o manual', say: 'Mostra-me o manual.' },
+        { icon: 'help-circle', label: 'Resolve tudo?', say: 'Este manual vai dizer-me como resolver todos os nossos problemas?' },
+        { icon: 'handshake', label: 'Vamos juntos', say: 'Quero aprender com a comunidade.' },
       ),
     },
   ),
@@ -55,9 +55,9 @@ const m1: Slide[] = [
 const m2: Slide[] = [
   line('2-0', 'ship', 'farmer', 'Já vi alguns problemas. Mas como sabemos o que acontece com a chuva, o solo e as culturas?', {
     replies: ask(
-      { icon: '🛰️', label: 'Do espaço?', say: 'Conseguimos ver isso do espaço?' },
-      { icon: '🚶', label: 'Visitar tudo?', say: 'Temos de visitar todas as machambas?' },
-      { icon: '📘', label: 'O manual', say: 'O manual explica?' },
+      { icon: 'satellite', label: 'Do espaço?', say: 'Conseguimos ver isso do espaço?' },
+      { icon: 'person-walking', label: 'Visitar tudo?', say: 'Temos de visitar todas as machambas?' },
+      { icon: 'book', label: 'O manual', say: 'O manual explica?' },
     ),
   }),
   line('2-1', 'hologram', 'astronaut', 'Há uma maneira de observar sem visitar todas as machambas. Vamos usar os olhos do espaço! Os satélites vêem vegetação, temperatura, chuva e humidade do solo.'),
@@ -70,9 +70,9 @@ const m2: Slide[] = [
   }),
   line('2-4', 'farm', 'farmer', 'Então precisamos de aprender a usar cada uma para ajudar a comunidade!', {
     replies: ask(
-      { icon: '🌧️', label: 'Chuva', say: 'Quero aprender a ver a chuva.' },
-      { icon: '🌡️', label: 'Calor', say: 'Quero aprender a ver o calor.' },
-      { icon: '🌿', label: 'Plantas', say: 'Quero aprender a ver as plantas.' },
+      { icon: 'cloud-rain', label: 'Chuva', say: 'Quero aprender a ver a chuva.' },
+      { icon: 'thermometer', label: 'Calor', say: 'Quero aprender a ver o calor.' },
+      { icon: 'leaf', label: 'Plantas', say: 'Quero aprender a ver as plantas.' },
     ),
   }),
   line('2-5', 'night', 'narrator', 'Missão 02 concluída. Os olhos do espaço estão abertos. A seguir: o mistério da chuva.'),
@@ -82,9 +82,9 @@ const m3: Slide[] = [
   line('3-0', 'dry', 'amelia', 'Há muitos anos cultivo nesta terra. Antes sabíamos quando semear. Agora é difícil saber quando vem a chuva.'),
   line('3-1', 'dry', 'farmer', 'Algumas plantas de milho estão enroladas. O solo parece seco.', {
     replies: ask(
-      { icon: '🌽', label: 'O milho sofre', say: 'O milho está a sofrer. Será que choveu menos?' },
-      { icon: '👵', label: 'Ouvir Dona Amélia', say: 'Dona Amélia, o que devemos fazer?' },
-      { icon: '📘', label: 'Abrir o manual', say: 'Vou abrir o Manual AgroSpace.' },
+      { icon: 'maize', label: 'O milho sofre', say: 'O milho está a sofrer. Será que choveu menos?' },
+      { icon: 'elder', label: 'Ouvir Dona Amélia', say: 'Dona Amélia, o que devemos fazer?' },
+      { icon: 'book', label: 'Abrir o manual', say: 'Vou abrir o Manual AgroSpace.' },
     ),
   }),
   line('3-2', 'hologram', 'manual', 'Nova missão: The Rainfall Mystery. Investiga as chuvas e ajuda a comunidade a compreender os riscos da próxima campanha.'),
@@ -94,9 +94,9 @@ const m3: Slide[] = [
       type: 'quiz',
       question: 'Qual é o período com mais chuva neste desenho?',
       options: [
-        { icon: '🌧️', label: 'Dezembro a Março', correct: true },
-        { icon: '☀️', label: 'Maio a Agosto' },
-        { icon: '❄️', label: 'Junho a Setembro' },
+        { icon: 'cloud-rain', label: 'Dezembro a Março', correct: true },
+        { icon: 'sun', label: 'Maio a Agosto' },
+        { icon: 'snowflake', label: 'Junho a Setembro' },
       ],
     },
   }),
@@ -105,17 +105,17 @@ const m3: Slide[] = [
       type: 'quiz',
       question: 'A chuva baixou de 700 para 490. Qual a redução?',
       options: [
-        { icon: '2️⃣', label: '20%' },
-        { icon: '3️⃣', label: '30%', correct: true },
-        { icon: '6️⃣', label: '60%' },
+        { icon: 'number-two', label: '20%' },
+        { icon: 'number-three', label: '30%', correct: true },
+        { icon: 'number-six', label: '60%' },
       ],
     },
   }),
   line('3-6', 'village', 'farmer', 'Se a chuva diminuiu 30%, as culturas vão morrer?', {
     replies: ask(
-      { icon: '😱', label: 'Vão morrer?', say: 'Todas as culturas vão morrer?' },
-      { icon: '🧠', label: 'Depende', say: 'Talvez dependa da terra e da cultura.' },
-      { icon: '👵', label: 'Perguntar à Dona Amélia', say: 'Dona Amélia, o que acha?' },
+      { icon: 'face-alarmed', label: 'Vão morrer?', say: 'Todas as culturas vão morrer?' },
+      { icon: 'brain', label: 'Depende', say: 'Talvez dependa da terra e da cultura.' },
+      { icon: 'elder', label: 'Perguntar à Dona Amélia', say: 'Dona Amélia, o que acha?' },
     ),
   }),
   line('3-7', 'farm', 'astronaut', 'Não necessariamente. O impacto depende de quando faltou a chuva, do solo e das culturas. Precisamos de ver a distribuição da água no ciclo.'),
@@ -125,9 +125,9 @@ const m3: Slide[] = [
       type: 'quiz',
       question: 'Como reduzir o risco com pouca água?',
       options: [
-        { icon: '🙈', label: 'Não mudar nada' },
-        { icon: '🔍', label: 'Analisar culturas e conservar humidade', correct: true },
-        { icon: '🚿', label: 'Irrigar sem ver se há água' },
+        { icon: 'eye-off', label: 'Não mudar nada' },
+        { icon: 'search', label: 'Analisar culturas e conservar humidade', correct: true },
+        { icon: 'shower', label: 'Irrigar sem ver se há água' },
       ],
     },
   }),
@@ -137,9 +137,9 @@ const m3: Slide[] = [
 const m4: Slide[] = [
   line('4-0', 'heat', 'farmer', 'Hoje está muito quente. As folhas do milho parecem diferentes. Será doença?', {
     replies: ask(
-      { icon: '🤒', label: 'Doença?', say: 'As plantas estão doentes?' },
-      { icon: '☀️', label: 'É o calor', say: 'Acho que é o calor.' },
-      { icon: '👵', label: 'Dona Amélia', say: 'Dona Amélia, o que está a acontecer?' },
+      { icon: 'thermometer', label: 'Doença?', say: 'As plantas estão doentes?' },
+      { icon: 'sun', label: 'É o calor', say: 'Acho que é o calor.' },
+      { icon: 'elder', label: 'Dona Amélia', say: 'Dona Amélia, o que está a acontecer?' },
     ),
   }),
   line('4-1', 'heat', 'amelia', 'Nem sempre é doença. O calor e a falta de água também afetam as plantas. Fala com o astronauta.'),
@@ -149,9 +149,9 @@ const m4: Slide[] = [
       type: 'quiz',
       question: 'Dia mais quente da semana de exemplo',
       options: [
-        { icon: '🌤️', label: 'Quarta — 35°C' },
-        { icon: '🔥', label: 'Sexta — 40°C', correct: true },
-        { icon: '☀️', label: 'Domingo — 34°C' },
+        { icon: 'cloud-sun', label: 'Quarta — 35°C' },
+        { icon: 'flame', label: 'Sexta — 40°C', correct: true },
+        { icon: 'sun', label: 'Domingo — 34°C' },
       ],
     },
   }),
@@ -164,9 +164,9 @@ const m4: Slide[] = [
       type: 'quiz',
       question: 'Qual estratégia investigar primeiro?',
       options: [
-        { icon: '🙈', label: 'Não acompanhar o calor' },
-        { icon: '🪵', label: 'Cobertura do solo e culturas adaptadas', correct: true },
-        { icon: '🚿', label: 'Irrigar sem ver o custo da água' },
+        { icon: 'eye-off', label: 'Não acompanhar o calor' },
+        { icon: 'log', label: 'Cobertura do solo e culturas adaptadas', correct: true },
+        { icon: 'shower', label: 'Irrigar sem ver o custo da água' },
       ],
     },
   }),
@@ -176,9 +176,9 @@ const m4: Slide[] = [
 const m5: Slide[] = [
   line('5-0', 'rain', 'farmer', 'Ontem choveu. Pensei que as plantas já estivessem melhor.', {
     replies: ask(
-      { icon: '🌧️', label: 'Choveu!', say: 'Choveu! A terra já deve estar molhada.' },
-      { icon: '😮', label: 'Continua seca', say: 'Estranho: a superfície já está a secar.' },
-      { icon: '👵', label: 'Ver a terra', say: 'Dona Amélia, mostra-me a terra.' },
+      { icon: 'cloud-rain', label: 'Choveu!', say: 'Choveu! A terra já deve estar molhada.' },
+      { icon: 'face-surprised', label: 'Continua seca', say: 'Estranho: a superfície já está a secar.' },
+      { icon: 'elder', label: 'Ver a terra', say: 'Dona Amélia, mostra-me a terra.' },
     ),
   }),
   line('5-1', 'soil', 'amelia', 'Parte da água infiltra, parte escorre, parte evapora. Precisamos de compreender a nossa machamba.'),
@@ -195,9 +195,9 @@ const m5: Slide[] = [
       type: 'quiz',
       question: 'Como guardar a água no solo?',
       options: [
-        { icon: '🏜️', label: 'Deixar o solo nu' },
-        { icon: '🪵', label: 'Cobertura morta com restos das plantas', correct: true },
-        { icon: '🚿', label: 'Irrigar sem ver se há água' },
+        { icon: 'mountain', label: 'Deixar o solo nu' },
+        { icon: 'log', label: 'Cobertura morta com restos das plantas', correct: true },
+        { icon: 'shower', label: 'Irrigar sem ver se há água' },
       ],
     },
   }),
@@ -208,25 +208,25 @@ const m5: Slide[] = [
         {
           question: 'Tendências regionais da humidade superficial?',
           options: [
-            { icon: '🛰️', label: 'NASA SMAP', correct: true },
-            { icon: '📷', label: 'Só uma foto da machamba' },
-            { icon: '🌡️', label: 'Temperatura de um dia' },
+            { icon: 'satellite', label: 'NASA SMAP', correct: true },
+            { icon: 'camera', label: 'Só uma foto da machamba' },
+            { icon: 'thermometer', label: 'Temperatura de um dia' },
           ],
         },
         {
           question: 'Saber se A TUA machamba está molhada?',
           options: [
-            { icon: '✋', label: 'Ver e medir no terreno', correct: true },
-            { icon: '🛰️', label: 'Só o satélite, sem ir ao campo' },
-            { icon: '🎲', label: 'Adivinhar' },
+            { icon: 'hand', label: 'Ver e medir no terreno', correct: true },
+            { icon: 'satellite', label: 'Só o satélite, sem ir ao campo' },
+            { icon: 'dice', label: 'Adivinhar' },
           ],
         },
         {
           question: 'O SMAP mede a água nas raízes profundas?',
           options: [
-            { icon: '✅', label: 'Sim, tudo' },
+            { icon: 'check', label: 'Sim, tudo' },
             { icon: '5️⃣', label: 'Não; mede sobretudo os primeiros 5 cm', correct: true },
-            { icon: '🌊', label: 'Só rios' },
+            { icon: 'waves', label: 'Só rios' },
           ],
         },
       ],
@@ -249,9 +249,9 @@ const m6: Slide[] = [
       type: 'quiz',
       question: 'O que os sinais dizem?',
       options: [
-        { icon: '❌', label: 'É só seca, com certeza' },
-        { icon: '🔍', label: 'Pode ser água ou calor — precisamos ver no campo', correct: true },
-        { icon: '🦠', label: 'O NDVI prova uma doença' },
+        { icon: 'x-circle', label: 'É só seca, com certeza' },
+        { icon: 'search', label: 'Pode ser água ou calor — precisamos ver no campo', correct: true },
+        { icon: 'microbe', label: 'O NDVI prova uma doença' },
       ],
     },
   }),
@@ -261,9 +261,9 @@ const m6: Slide[] = [
       type: 'quiz',
       question: 'O NDVI baixou. E agora?',
       options: [
-        { icon: '🧪', label: 'Deitar adubo já, sem ver o solo' },
-        { icon: '👀', label: 'Ver a cultura, os dados e o terreno', correct: true },
-        { icon: '🚪', label: 'Abandonar a machamba' },
+        { icon: 'flask', label: 'Deitar adubo já, sem ver o solo' },
+        { icon: 'eye', label: 'Ver a cultura, os dados e o terreno', correct: true },
+        { icon: 'door', label: 'Abandonar a machamba' },
       ],
     },
   }),
@@ -287,25 +287,25 @@ const m7: Slide[] = [
         {
           question: 'Qual nutriente ajuda o crescimento verde e as proteínas?',
           options: [
-            { icon: '🇳', label: 'Azoto (N)', correct: true },
-            { icon: '🇰', label: 'Potássio (K)' },
-            { icon: '🦴', label: 'Cálcio (Ca)' },
+            { icon: 'key-n', label: 'Azoto (N)', correct: true },
+            { icon: 'key-k', label: 'Potássio (K)' },
+            { icon: 'bone', label: 'Cálcio (Ca)' },
           ],
         },
         {
           question: 'Qual ajuda a planta a gerir a água?',
           options: [
-            { icon: '🇳', label: 'Azoto (N)' },
-            { icon: '🇰', label: 'Potássio (K)', correct: true },
-            { icon: '☀️', label: 'Só o sol' },
+            { icon: 'key-n', label: 'Azoto (N)' },
+            { icon: 'key-k', label: 'Potássio (K)', correct: true },
+            { icon: 'sun', label: 'Só o sol' },
           ],
         },
         {
           question: 'Qual está ligado à energia da planta?',
           options: [
-            { icon: '🇵', label: 'Fósforo (P)', correct: true },
-            { icon: '💨', label: 'Vento' },
-            { icon: '🪨', label: 'Pedras' },
+            { icon: 'key-p', label: 'Fósforo (P)', correct: true },
+            { icon: 'wind', label: 'Vento' },
+            { icon: 'rock', label: 'Pedras' },
           ],
         },
       ],
@@ -329,9 +329,9 @@ const m8: Slide[] = [
       type: 'quiz',
       question: 'Quem sou eu?',
       options: [
-        { icon: '🌽', label: 'Milho' },
-        { icon: '🫘', label: 'Feijão-nhemba', correct: true },
-        { icon: '🌾', label: 'Sorgo' },
+        { icon: 'maize', label: 'Milho' },
+        { icon: 'bean', label: 'Feijão-nhemba', correct: true },
+        { icon: 'wheat', label: 'Sorgo' },
       ],
     },
   }),
@@ -343,9 +343,9 @@ const m8: Slide[] = [
       type: 'quiz',
       question: 'O que é verdade sobre as leguminosas?',
       options: [
-        { icon: '❌', label: 'Dão sempre todo o azoto ao milho' },
-        { icon: '🌱', label: 'Podem fixar azoto; o benefício depende', correct: true },
-        { icon: '🚫', label: 'Nunca ajudam o azoto' },
+        { icon: 'x-circle', label: 'Dão sempre todo o azoto ao milho' },
+        { icon: 'sprout', label: 'Podem fixar azoto; o benefício depende', correct: true },
+        { icon: 'ban', label: 'Nunca ajudam o azoto' },
       ],
     },
   }),
@@ -373,12 +373,12 @@ const m9: Slide[] = [
     challenge: {
       type: 'checklist',
       items: [
-        { icon: '🌰', label: 'Sementes e custo' },
-        { icon: '🧱', label: 'Solo e drenagem' },
-        { icon: '🌧️', label: 'Calendário da chuva' },
-        { icon: '🍲', label: 'Comida da família' },
-        { icon: '🛒', label: 'Venda e arrumo' },
-        { icon: '🧪', label: 'Ensaio pequeno' },
+        { icon: 'nut', label: 'Sementes e custo' },
+        { icon: 'brick', label: 'Solo e drenagem' },
+        { icon: 'cloud-rain', label: 'Calendário da chuva' },
+        { icon: 'cooking-pot', label: 'Comida da família' },
+        { icon: 'cart', label: 'Venda e arrumo' },
+        { icon: 'flask', label: 'Ensaio pequeno' },
       ],
     },
   }),
@@ -402,9 +402,9 @@ const m10: Slide[] = [
       type: 'quiz',
       question: 'Seca: o que fazer primeiro?',
       options: [
-        { icon: '🙈', label: 'Não avaliar a água' },
-        { icon: '🪵', label: 'Ver humidade, cobrir o solo, datas e variedades', correct: true },
-        { icon: '🚿', label: 'Irrigar sem saber se há água' },
+        { icon: 'eye-off', label: 'Não avaliar a água' },
+        { icon: 'log', label: 'Ver humidade, cobrir o solo, datas e variedades', correct: true },
+        { icon: 'shower', label: 'Irrigar sem saber se há água' },
       ],
     },
   }),
@@ -414,8 +414,8 @@ const m10: Slide[] = [
       question: 'Antes de proteger do calor, o que olhar?',
       options: [
         { icon: '1️⃣', label: 'Só a máxima de um dia' },
-        { icon: '📅', label: 'Duração, fase da planta, água e variedade', correct: true },
-        { icon: '🛰️', label: 'Só uma imagem NDVI' },
+        { icon: 'calendar', label: 'Duração, fase da planta, água e variedade', correct: true },
+        { icon: 'satellite', label: 'Só uma imagem NDVI' },
       ],
     },
   }),
@@ -425,9 +425,9 @@ const m10: Slide[] = [
       type: 'quiz',
       question: 'Chuva intensa: o que investigar?',
       options: [
-        { icon: '🧹', label: 'Tirar toda a cobertura' },
-        { icon: '🛡️', label: 'Cobertura, drenagem e conservação', correct: true },
-        { icon: '🎉', label: 'Ignorar: chuva é sempre boa' },
+        { icon: 'broom', label: 'Tirar toda a cobertura' },
+        { icon: 'shield', label: 'Cobertura, drenagem e conservação', correct: true },
+        { icon: 'party', label: 'Ignorar: chuva é sempre boa' },
       ],
     },
   }),
@@ -446,29 +446,29 @@ const m11: Slide[] = [
         {
           question: 'O GPM ajuda a ver quando choveu?',
           options: [
-            { icon: '✅', label: 'Sim', correct: true },
-            { icon: '❌', label: 'Não' },
+            { icon: 'check', label: 'Sim', correct: true },
+            { icon: 'x-circle', label: 'Não' },
           ],
         },
         {
           question: 'O SMAP mede a água exacta das raízes da tua parcela?',
           options: [
-            { icon: '✅', label: 'Sim, exacto' },
-            { icon: '❌', label: 'Não; é regional e superficial', correct: true },
+            { icon: 'check', label: 'Sim, exacto' },
+            { icon: 'x-circle', label: 'Não; é regional e superficial', correct: true },
           ],
         },
         {
           question: 'O NDVI sozinho prova a melhor rotação?',
           options: [
-            { icon: '✅', label: 'Sim' },
-            { icon: '❌', label: 'Não', correct: true },
+            { icon: 'check', label: 'Sim' },
+            { icon: 'x-circle', label: 'Não', correct: true },
           ],
         },
         {
           question: 'A experiência da comunidade conta?',
           options: [
-            { icon: '✅', label: 'Sim, muito', correct: true },
-            { icon: '❌', label: 'Não' },
+            { icon: 'check', label: 'Sim, muito', correct: true },
+            { icon: 'x-circle', label: 'Não' },
           ],
         },
       ],
@@ -481,12 +481,12 @@ const m11: Slide[] = [
     challenge: {
       type: 'checklist',
       items: [
-        { icon: '🌰', label: 'Sementes' },
-        { icon: '🧱', label: 'Solo' },
-        { icon: '🌧️', label: 'Chuva' },
-        { icon: '🍲', label: 'Comida' },
-        { icon: '🛒', label: 'Mercado' },
-        { icon: '🧪', label: 'Ensaio' },
+        { icon: 'nut', label: 'Sementes' },
+        { icon: 'brick', label: 'Solo' },
+        { icon: 'cloud-rain', label: 'Chuva' },
+        { icon: 'cooking-pot', label: 'Comida' },
+        { icon: 'cart', label: 'Mercado' },
+        { icon: 'flask', label: 'Ensaio' },
       ],
     },
   }),
@@ -499,9 +499,9 @@ const m11: Slide[] = [
 const m12: Slide[] = [
   line('12-0', 'harvest', 'farmer', 'Chegou o dia da colheita. E se a estratégia não tiver funcionado?', {
     replies: ask(
-      { icon: '😬', label: 'Estou nervoso', say: 'Estou nervoso com os resultados.' },
-      { icon: '💪', label: 'Vamos ver', say: 'Vamos ver o que a terra nos ensinou.' },
-      { icon: '👵', label: 'Dona Amélia', say: 'Dona Amélia, o que aprendemos mesmo que a colheita seja pouca?' },
+      { icon: 'face-uneasy', label: 'Estou nervoso', say: 'Estou nervoso com os resultados.' },
+      { icon: 'zap', label: 'Vamos ver', say: 'Vamos ver o que a terra nos ensinou.' },
+      { icon: 'elder', label: 'Dona Amélia', say: 'Dona Amélia, o que aprendemos mesmo que a colheita seja pouca?' },
     ),
   }),
   line('12-1', 'harvest', 'amelia', 'Um agricultor também aprende com uma colheita difícil.'),
@@ -521,23 +521,23 @@ const m12: Slide[] = [
         {
           question: 'NDVI alto prova mais comida?',
           options: [
-            { icon: '✅', label: 'Sim, sempre' },
-            { icon: '❌', label: 'Não; é preciso medir a colheita', correct: true },
-            { icon: '🌧️', label: 'Sim, se chover' },
+            { icon: 'check', label: 'Sim, sempre' },
+            { icon: 'x-circle', label: 'Não; é preciso medir a colheita', correct: true },
+            { icon: 'cloud-rain', label: 'Sim, se chover' },
           ],
         },
         {
           question: 'Uma campanha boa prova a rotação para sempre?',
           options: [
-            { icon: '✅', label: 'Sim' },
-            { icon: '❌', label: 'Não; o ano seguinte pode ser diferente', correct: true },
+            { icon: 'check', label: 'Sim' },
+            { icon: 'x-circle', label: 'Não; o ano seguinte pode ser diferente', correct: true },
           ],
         },
         {
           question: 'Os dados da NASA substituem o agricultor?',
           options: [
-            { icon: '✅', label: 'Sim' },
-            { icon: '❌', label: 'Não; apoiam a decisão', correct: true },
+            { icon: 'check', label: 'Sim' },
+            { icon: 'x-circle', label: 'Não; apoiam a decisão', correct: true },
           ],
         },
       ],

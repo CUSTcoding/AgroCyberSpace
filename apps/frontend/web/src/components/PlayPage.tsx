@@ -153,7 +153,7 @@ export function PlayPage({ chapter, save, setSave, language, onLanguageChange, o
 
       <aside className="dock">
         <div className="dock-head">
-          <b><Icon name={echo ? '👨‍🌾' : face(slide.speaker)} /> {echo ? t('Agricultor') : t(names[slide.speaker])}</b>
+          <b><Icon name={echo ? 'user' : face(slide.speaker)} /> {echo ? t('Agricultor') : t(names[slide.speaker])}</b>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             {needsChallenge && (
               <button
@@ -163,7 +163,7 @@ export function PlayPage({ chapter, save, setSave, language, onLanguageChange, o
                 type="button"
                 title={t('Dica Científica da Missão')}
               >
-                <Icon name="💡" />
+                <Icon name="lightbulb" />
                 <span>{loadingHint ? t('A carregar dica...') : t('Pedir Dica IA')}</span>
               </button>
             )}
@@ -178,7 +178,7 @@ export function PlayPage({ chapter, save, setSave, language, onLanguageChange, o
                 if (!voice) hush()
               }}
             >
-              <Icon name={save.voice ? '🔊' : '🔇'} />
+              <Icon name={save.voice ? 'volume' : 'volume-off'} />
               <span className="voice-label">{t(save.voice ? 'Ouvir outra vez' : 'Ouvir a história')}</span>
             </button>
           </div>
@@ -187,25 +187,25 @@ export function PlayPage({ chapter, save, setSave, language, onLanguageChange, o
         {aiHint && (
           <div className="hint-box">
             <div className="hint-box-head">
-              <span>🛰️ {t('Dica Científica da Missão')} ({aiHint.source})</span>
+              <span>satellite {t('Dica Científica da Missão')} ({aiHint.source})</span>
               <button
                 type="button"
                 onClick={() => setAiHint(null)}
                 style={{ background: 'none', border: 'none', color: '#2ec4b6', cursor: 'pointer' }}
               >
-                ✕
+                x
               </button>
             </div>
             <p style={{ margin: '4px 0' }}>{aiHint.explanation}</p>
             {aiHint.resolution_warning && (
-              <p style={{ fontSize: '11px', opacity: 0.8, margin: '2px 0 0' }}>⚠️ {aiHint.resolution_warning}</p>
+              <p style={{ fontSize: '11px', opacity: 0.8, margin: '2px 0 0' }}>warning {aiHint.resolution_warning}</p>
             )}
           </div>
         )}
 
         <p className="line" aria-live="polite">{echo || displayText}</p>
         {needsChallenge ? (
-          <p className="hint dock-hint"><Icon name="👆" /> {t('Toca nas imagens acima para continuar.')}</p>
+          <p className="hint dock-hint"><Icon name="hand" /> {t('Toca nas imagens acima para continuar.')}</p>
         ) : (
           <div className="replies">
             {displayReplies.map((r) => (
@@ -217,7 +217,7 @@ export function PlayPage({ chapter, save, setSave, language, onLanguageChange, o
           </div>
         )}
         {solved && slide.challenge && (
-          <button className="cta dock-cta" onClick={next}>{t('Seguir')} <Icon name="👉" /></button>
+          <button className="cta dock-cta" onClick={next}>{t('Seguir')} <Icon name="pointer" /></button>
         )}
       </aside>
     </div>
@@ -254,11 +254,11 @@ function translateChallenge(challenge: Challenge, language: Language): Challenge
 
 function face(s: keyof typeof names) {
   return {
-    astronaut: '🧑‍🚀',
-    farmer: '👨‍🌾',
-    amelia: '👵',
-    manual: '📘',
-    narrator: '✨',
-    child: '👧',
+    astronaut: 'user',
+    farmer: 'user',
+    amelia: 'elder',
+    manual: 'book',
+    narrator: 'sparkles',
+    child: 'user',
   }[s]
 }

@@ -129,4 +129,7 @@ export type AiHintResponse = {
     source: string
     dataset_version: string
   }
+  source?: string
+  explanation?: string
+  resolution_warning?: string | null
 }

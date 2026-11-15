@@ -119,14 +119,18 @@ export const api = {
    * Request deterministic AI explanation/hint for farming challenge context.
    */
   async getAiHint(
+    category: string = 'simulation',
     language: 'pt' | 'en' = 'pt',
   ): Promise<AiHintResponse> {
-    return request<AiHintResponse>('/ai/hint', {
+    const validCategory = ['observed', 'derived', 'forecast', 'simulation'].includes(category)
+      ? (category as 'observed' | 'derived' | 'forecast' | 'simulation')
+      : 'simulation'
+    const res = await request<AiHintResponse>('/ai/hint', {
       method: 'POST',
       body: JSON.stringify({
         language,
         context: {
-          category: 'simulation',
+          category: validCategory,
           source: 'AgroSpace local educational content',
           dataset_version: 'not-applicable',
           limitations: [
@@ -135,6 +139,12 @@ export const api = {
         },
       }),
     })
+    return {
+      ...res,
+      source: res.technical_details?.source || 'AgroSpace',
+      explanation: res.message_simple || res.why,
+      resolution_warning: res.limitations?.[0] || null,
+    }
   },
 
   /**

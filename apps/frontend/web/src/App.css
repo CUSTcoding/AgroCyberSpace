@@ -62,6 +62,9 @@ button:disabled { cursor: not-allowed; }
 .voice-btn:hover, .ghost:hover { border-color: #fff; background: #172541; }
 .voice-btn.on { border-color: #ffca66; }
 .voice-label { font-size: 14px; }
+.ui-icon-status-green { color: #43b581; fill: #43b581; }
+.ui-icon-status-brown { color: #9b7653; fill: #9b7653; }
+.ui-icon-status-yellow { color: #e4b83f; fill: #e4b83f; }
 .language-switch {
   display: inline-flex;
   align-items: center;

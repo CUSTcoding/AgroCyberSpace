@@ -31,9 +31,9 @@ export function Challenges({ challenge, onSolved, strategy, setStrategy, languag
         <Quiz
           question="Qual zona está mais seca?"
           options={[
-            { icon: '🏜️', label: 'Zona A 0.08', correct: true },
-            { icon: '🌿', label: 'Zona B 0.21' },
-            { icon: '💧', label: 'Zona C 0.35' },
+            { icon: 'mountain', label: 'Zona A 0.08', correct: true },
+            { icon: 'leaf', label: 'Zona B 0.21' },
+            { icon: 'droplet', label: 'Zona C 0.35' },
           ]}
           onSolved={onSolved}
         />
@@ -44,9 +44,9 @@ export function Challenges({ challenge, onSolved, strategy, setStrategy, languag
         <Quiz
           question="Qual zona tem o menor NDVI?"
           options={[
-            { icon: '🟢', label: 'A 0.72' },
-            { icon: '🟤', label: 'B 0.18', correct: true },
-            { icon: '🟡', label: 'C 0.51' },
+            { icon: 'status-green', label: 'A 0.72' },
+            { icon: 'status-brown', label: 'B 0.18', correct: true },
+            { icon: 'status-yellow', label: 'C 0.51' },
           ]}
           onSolved={onSolved}
         />
@@ -64,9 +64,9 @@ export function Challenges({ challenge, onSolved, strategy, setStrategy, languag
         <Quiz
           question="X tem 2,4 (1,4–3,4). Y tem 2,2 (1,9–2,5). O que é mais certo?"
           options={[
-            { icon: '🏆', label: 'X é sempre melhor' },
-            { icon: '⚖️', label: 'X é mais alto, mas mais incerto', correct: true },
-            { icon: '🔒', label: 'Y garante 1,9 sempre' },
+            { icon: 'trophy', label: 'X é sempre melhor' },
+            { icon: 'scale', label: 'X é mais alto, mas mais incerto', correct: true },
+            { icon: 'lock', label: 'Y garante 1,9 sempre' },
           ]}
           onSolved={onSolved}
         />
@@ -91,7 +91,7 @@ export function Challenges({ challenge, onSolved, strategy, setStrategy, languag
 function Feedback({ ok, text }: { ok: boolean | null; text: string }) {
   const t = useChallengeTranslate()
   if (ok === null) return null
-  return <p className={`fb ${ok ? 'ok' : 'bad'}`}><Icon name={ok ? '✅' : '🔁'} /> {t(text)}</p>
+  return <p className={`fb ${ok ? 'ok' : 'bad'}`}><Icon name={ok ? 'check' : 'repeat'} /> {t(text)}</p>
 }
 
 function Quiz({
@@ -177,7 +177,7 @@ function MzMap({ onSolved }: { onSolved: () => void }) {
               if (p.good) onSolved()
             }}
           >
-            <Icon name={p.id === 'mz' ? '🇲🇿' : '📍'} />
+            <Icon name={p.id === 'mz' ? 'flag-mozambique' : 'map-pin'} />
             {t(p.label)}
           </button>
         ))}
@@ -190,10 +190,10 @@ function MzMap({ onSolved }: { onSolved: () => void }) {
 function Tools({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const tools = [
-    { icon: '🌧️', name: 'GPM', text: 'Chuva' },
-    { icon: '🌡️', name: 'POWER', text: 'Calor' },
-    { icon: '💧', name: 'SMAP', text: 'Solo húmido' },
-    { icon: '🌿', name: 'Landsat', text: 'Plantas' },
+    { icon: 'cloud-rain', name: 'GPM', text: 'Chuva' },
+    { icon: 'thermometer', name: 'POWER', text: 'Calor' },
+    { icon: 'droplet', name: 'SMAP', text: 'Solo húmido' },
+    { icon: 'leaf', name: 'Landsat', text: 'Plantas' },
   ]
   const [seen, setSeen] = useState<string[]>([])
   return (
@@ -230,7 +230,7 @@ function PlantSim({ onSolved }: { onSolved: () => void }) {
   return (
     <div>
       <h3>{t('Protege a planta')}</h3>
-      <div className="plant-face"><Icon name={risk > 70 ? '🥀' : risk > 45 ? '🌱' : '🌿'} /></div>
+      <div className="plant-face"><Icon name={risk > 70 ? 'wilted-flower' : risk > 45 ? 'sprout' : 'leaf'} /></div>
       <label>{t('Temperatura')} {temp}°C
         <input type="range" min={25} max={45} value={temp} onChange={(e) => setTemp(+e.target.value)} />
       </label>
@@ -238,7 +238,7 @@ function PlantSim({ onSolved }: { onSolved: () => void }) {
         <input type="range" min={10} max={90} value={water} onChange={(e) => setWater(+e.target.value)} />
       </label>
       <button className={`pic-btn ${mulch ? 'picked' : ''}`} onClick={() => setMulch(!mulch)}>
-        <Icon name="🪵" /> {t('Cobertura morta')}
+        <Icon name="log" /> {t('Cobertura morta')}
       </button>
       <p className="hint">{t('Risco ilustrativo:')} {risk}/100 — {t('não é modelo real.')}</p>
       <button className="cta" onClick={onSolved}>{t('Percebi')}</button>
@@ -252,9 +252,9 @@ function WaterSplit({ onSolved }: { onSolved: () => void }) {
     <div>
       <h3>{t('Para onde foi a água?')}</h3>
       <div className="bars">
-        <div><span><Icon name="⬇️" /> {t('Infiltração')}</span><i style={{ width: '50%' }} /></div>
-        <div><span><Icon name="☀️" /> {t('Evaporação')}</span><i style={{ width: '25%' }} /></div>
-        <div><span><Icon name="➡️" /> {t('Escoamento')}</span><i style={{ width: '25%' }} /></div>
+        <div><span><Icon name="arrow-down" /> {t('Infiltração')}</span><i style={{ width: '50%' }} /></div>
+        <div><span><Icon name="sun" /> {t('Evaporação')}</span><i style={{ width: '25%' }} /></div>
+        <div><span><Icon name="arrow-right" /> {t('Escoamento')}</span><i style={{ width: '25%' }} /></div>
       </div>
       <p className="hint">{t('Nem toda a chuva fica na terra para as raízes.')}</p>
       <button className="cta" onClick={onSolved}>{t('Percebi')}</button>
@@ -286,9 +286,9 @@ function NdviLab({ onSolved }: { onSolved: () => void }) {
 function SoilTexture({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const soils = [
-    { id: 'areia', icon: '🏖️', t: 'Arenoso', d: 'Deixa a água passar depressa.' },
-    { id: 'franco', icon: '🪴', t: 'Franco', d: 'Mistura equilibrada.' },
-    { id: 'argila', icon: '🧱', t: 'Argiloso', d: 'Guarda água, pode compactar.' },
+    { id: 'areia', icon: 'umbrella', t: 'Arenoso', d: 'Deixa a água passar depressa.' },
+    { id: 'franco', icon: 'potted-plant', t: 'Franco', d: 'Mistura equilibrada.' },
+    { id: 'argila', icon: 'brick', t: 'Argiloso', d: 'Guarda água, pode compactar.' },
   ]
   const [id, setId] = useState('franco')
   const s = soils.find((x) => x.id === id)!
@@ -311,10 +311,10 @@ function SoilTexture({ onSolved }: { onSolved: () => void }) {
 function Practices({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const items = [
-    { id: 'mulch', icon: '🪵', t: 'Cobertura morta', good: true },
-    { id: 'compost', icon: '🍂', t: 'Composto', good: true },
-    { id: 'rot', icon: '🔄', t: 'Rotação', good: true },
-    { id: 'bare', icon: '🏜️', t: 'Solo nu', good: false },
+    { id: 'mulch', icon: 'log', t: 'Cobertura morta', good: true },
+    { id: 'compost', icon: 'falling-leaf', t: 'Composto', good: true },
+    { id: 'rot', icon: 'refresh', t: 'Rotação', good: true },
+    { id: 'bare', icon: 'mountain', t: 'Solo nu', good: false },
   ]
   const [sel, setSel] = useState<string[]>(['mulch'])
   const score = items.filter((i) => i.good && sel.includes(i.id)).length * 25 - (sel.includes('bare') ? 20 : 0)
@@ -356,7 +356,7 @@ function Erosion({ onSolved }: { onSolved: () => void }) {
       <div className="choice-grid">
         {['Fraca', 'Moderada', 'Intensa'].map((n, i) => (
           <button key={n} className={`pic-btn ${rain === i + 1 ? 'picked' : ''}`} onClick={() => setRain(i + 1)}>
-            <Icon name={['🌦️', '🌧️', '⛈️'][i]} /> {tr(n)}
+            <Icon name={['cloud-sun-rain', 'cloud-rain', 'cloud-lightning'][i]} /> {tr(n)}
           </button>
         ))}
       </div>
@@ -374,10 +374,10 @@ function Notebook({ onSolved }: { onSolved: () => void }) {
       <p className="hint">{tr('Toca no que viste. Isto é um desenho, não uma análise de laboratório.')}</p>
       <div className="choice-grid four">
         {[
-          ['🏖️', 'Areia'],
-          ['🪴', 'Franco'],
-          ['🧱', 'Argila'],
-          ['❓', 'Ainda não sei'],
+          ['umbrella', 'Areia'],
+          ['potted-plant', 'Franco'],
+          ['brick', 'Argila'],
+          ['help-circle', 'Ainda não sei'],
         ].map(([i, t]) => (
           <button key={t} className="pic-btn">
             <span className="pic"><Icon name={i} /></span>{tr(t)}
@@ -392,10 +392,10 @@ function Notebook({ onSolved }: { onSolved: () => void }) {
 function CropWater({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const crops = [
-    { id: 'milho', icon: '🌽', t: 'Milho' },
-    { id: 'nhemba', icon: '🫘', t: 'Nhemba' },
-    { id: 'sorgo', icon: '🌾', t: 'Sorgo' },
-    { id: 'amendoim', icon: '🥜', t: 'Amendoim' },
+    { id: 'milho', icon: 'maize', t: 'Milho' },
+    { id: 'nhemba', icon: 'bean', t: 'Nhemba' },
+    { id: 'sorgo', icon: 'wheat', t: 'Sorgo' },
+    { id: 'amendoim', icon: 'peanut', t: 'Amendoim' },
   ]
   const [c, setC] = useState('milho')
   const [w, setW] = useState(1)
@@ -431,11 +431,11 @@ function CropWater({ onSolved }: { onSolved: () => void }) {
 function Priorities({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const all = [
-    { id: 'water', icon: '💧', t: 'Água' },
-    { id: 'food', icon: '🍲', t: 'Comida' },
-    { id: 'soil', icon: '🌱', t: 'Solo' },
-    { id: 'market', icon: '🛒', t: 'Venda' },
-    { id: 'seed', icon: '🌰', t: 'Sementes' },
+    { id: 'water', icon: 'droplet', t: 'Água' },
+    { id: 'food', icon: 'cooking-pot', t: 'Comida' },
+    { id: 'soil', icon: 'sprout', t: 'Solo' },
+    { id: 'market', icon: 'cart', t: 'Venda' },
+    { id: 'seed', icon: 'nut', t: 'Sementes' },
   ]
   const [sel, setSel] = useState<string[]>(['water', 'food', 'soil'])
   return (
@@ -464,10 +464,10 @@ function Priorities({ onSolved }: { onSolved: () => void }) {
 function RotationBuild({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const crops = [
-    { icon: '🌽', label: 'Milho' },
-    { icon: '🫘', label: 'Nhemba' },
-    { icon: '🌾', label: 'Sorgo' },
-    { icon: '🥜', label: 'Amendoim' },
+    { icon: 'maize', label: 'Milho' },
+    { icon: 'bean', label: 'Nhemba' },
+    { icon: 'wheat', label: 'Sorgo' },
+    { icon: 'peanut', label: 'Amendoim' },
   ]
   const [seq, setSeq] = useState([0, 1, 2])
   return (
@@ -506,10 +506,10 @@ function ClimateLab({ onSolved }: { onSolved: () => void }) {
         ))}
       </div>
       <div className="stat-grid">
-        <div><Icon name="🌧️" /> {s.gpm} mm</div>
-        <div><Icon name="🌡️" /> {s.temp}°C</div>
-        <div><Icon name="💧" /> {s.smap}</div>
-        <div><Icon name="🌿" /> {s.ndvi}</div>
+        <div><Icon name="cloud-rain" /> {s.gpm} mm</div>
+        <div><Icon name="thermometer" /> {s.temp}°C</div>
+        <div><Icon name="droplet" /> {s.smap}</div>
+        <div><Icon name="leaf" /> {s.ndvi}</div>
       </div>
       <p className="hint">{tr('Valores fictícios para aprender, não dados reais da NASA.')}</p>
       <button className="cta" onClick={onSolved}>{tr('Percebi')}</button>
@@ -520,7 +520,7 @@ function ClimateLab({ onSolved }: { onSolved: () => void }) {
 function RotationCompare({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const [w, setW] = useState([4, 5, 3, 2])
-  const labels = ['💧 Água', '🍲 Comida', '🌱 Solo', '🛒 Mercado']
+  const labels = ['droplet Água', 'cooking-pot Comida', 'sprout Solo', 'cart Mercado']
   const scores = useMemo(() => {
     const base = [
       [2, 5, 2, 3],
@@ -586,9 +586,9 @@ function PickStrategy({
 }) {
   const tr = useChallengeTranslate()
   const opts = [
-    { id: 'A' as const, icon: '🌽', t: 'A · só milho' },
-    { id: 'B' as const, icon: '🌽🫘🌾', t: 'B · milho, nhemba, sorgo' },
-    { id: 'C' as const, icon: '🌾🫘🥜', t: 'C · sorgo, nhemba, amendoim' },
+    { id: 'A' as const, icon: 'maize', t: 'A · só milho' },
+    { id: 'B' as const, icon: 'crop-mix', t: 'B · milho, nhemba, sorgo' },
+    { id: 'C' as const, icon: 'rotation-crops', t: 'C · sorgo, nhemba, amendoim' },
   ]
   return (
     <div>
@@ -609,9 +609,9 @@ function PickStrategy({
 function ExtremeSim({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const scenes = [
-    { t: 'Seca', icon: '🌵', rain: 260, temp: 36, smap: 0.09, ndvi: 0.27 },
-    { t: 'Calor', icon: '🔥', rain: 500, temp: 41, smap: 0.14, ndvi: 0.33 },
-    { t: 'Chuva forte', icon: '🌊', rain: 920, temp: 28, smap: 0.34, ndvi: 0.44 },
+    { t: 'Seca', icon: 'cactus', rain: 260, temp: 36, smap: 0.09, ndvi: 0.27 },
+    { t: 'Calor', icon: 'flame', rain: 500, temp: 41, smap: 0.14, ndvi: 0.33 },
+    { t: 'Chuva forte', icon: 'waves', rain: 920, temp: 28, smap: 0.34, ndvi: 0.44 },
   ]
   const [i, setI] = useState(0)
   const s = scenes[i]
@@ -626,10 +626,10 @@ function ExtremeSim({ onSolved }: { onSolved: () => void }) {
         ))}
       </div>
       <div className="stat-grid">
-        <div><Icon name="🌧️" /> {s.rain} mm</div>
-        <div><Icon name="🌡️" /> {s.temp}°C</div>
-        <div><Icon name="💧" /> {s.smap}</div>
-        <div><Icon name="🌿" /> {s.ndvi}</div>
+        <div><Icon name="cloud-rain" /> {s.rain} mm</div>
+        <div><Icon name="thermometer" /> {s.temp}°C</div>
+        <div><Icon name="droplet" /> {s.smap}</div>
+        <div><Icon name="leaf" /> {s.ndvi}</div>
       </div>
       <button className="cta" onClick={onSolved}>{tr('Percebi')}</button>
     </div>
@@ -649,7 +649,7 @@ function Resilience({ onSolved }: { onSolved: () => void }) {
     <div>
       <h3>{tr('Teste de resiliência')}</h3>
       <div className="choice-grid">
-        {['🌵 Seca', '🔥 Calor', '🌊 Cheia'].map((n, nI) => (
+        {['cactus Seca', 'flame Calor', 'waves Cheia'].map((n, nI) => (
           <button key={n} className={`pic-btn ${i === nI ? 'picked' : ''}`} onClick={() => setI(nI)}><IconLabel text={tr(n)} /></button>
         ))}
       </div>
@@ -665,10 +665,10 @@ function Resilience({ onSolved }: { onSolved: () => void }) {
 function Timeline({ onSolved, strategy }: { onSolved: () => void; strategy: 'A' | 'B' | 'C' }) {
   const tr = useChallengeTranslate()
   const phases = [
-    { icon: '🌰', t: 'Preparar' },
-    { icon: '🌱', t: 'Crescer' },
-    { icon: '🌼', t: 'Florir' },
-    { icon: '🧺', t: 'Colher' },
+    { icon: 'nut', t: 'Preparar' },
+    { icon: 'sprout', t: 'Crescer' },
+    { icon: 'flower', t: 'Florir' },
+    { icon: 'basket', t: 'Colher' },
   ]
   const [i, setI] = useState(0)
   return (
@@ -689,11 +689,11 @@ function Timeline({ onSolved, strategy }: { onSolved: () => void; strategy: 'A' 
 function Sources({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const all = [
-    { id: 'gpm', icon: '🌧️', t: 'GPM chuva' },
-    { id: 'power', icon: '🌡️', t: 'POWER calor' },
-    { id: 'smap', icon: '💧', t: 'SMAP solo' },
-    { id: 'landsat', icon: '🌿', t: 'Landsat plantas' },
-    { id: 'local', icon: '✋', t: 'Olhos no terreno' },
+    { id: 'gpm', icon: 'cloud-rain', t: 'GPM chuva' },
+    { id: 'power', icon: 'thermometer', t: 'POWER calor' },
+    { id: 'smap', icon: 'droplet', t: 'SMAP solo' },
+    { id: 'landsat', icon: 'leaf', t: 'Landsat plantas' },
+    { id: 'local', icon: 'hand', t: 'Olhos no terreno' },
   ]
   const [sel, setSel] = useState<string[]>([])
   const done = all.every((x) => sel.includes(x.id))
@@ -724,10 +724,10 @@ function HarvestEcon({ onSolved }: { onSolved: () => void }) {
   const tr = useChallengeTranslate()
   const [p, setP] = useState([2.8, 4.5, 2.4, 6.5])
   const names = [
-    { icon: '🌽', label: 'Milho' },
-    { icon: '🫘', label: 'Nhemba' },
-    { icon: '🌾', label: 'Sorgo' },
-    { icon: '🥜', label: 'Amendoim' },
+    { icon: 'maize', label: 'Milho' },
+    { icon: 'bean', label: 'Nhemba' },
+    { icon: 'wheat', label: 'Sorgo' },
+    { icon: 'peanut', label: 'Amendoim' },
   ]
   return (
     <div>

@@ -2,12 +2,12 @@ import type { SceneId, Speaker } from '../types'
 import { Icon } from './Icon'
 
 const faces: Record<Speaker, string> = {
-  astronaut: '🧑‍🚀',
-  farmer: '👨‍🌾',
-  amelia: '👵',
-  manual: '📘',
-  narrator: '✨',
-  child: '👧',
+  astronaut: 'user',
+  farmer: 'user',
+  amelia: 'elder',
+  manual: 'book',
+  narrator: 'sparkles',
+  child: 'user',
 }
 
 export function SceneArt({ scene, speaker }: { scene: SceneId; speaker: Speaker }) {
@@ -67,11 +67,11 @@ function VillageView({ council }: { council?: boolean }) {
     <div className={`art village-art ${council ? 'council' : ''}`}>
       <div className="hut h1" />
       <div className="hut h2" />
-      <div className="tree"><Icon name="🌳" /></div>
+      <div className="tree"><Icon name="tree" /></div>
       <div className="people">
-        <Icon name="👨‍🌾" />
-        <Icon name="👵" />
-        <Icon name="👧" />
+        <Icon name="user" />
+        <Icon name="elder" />
+        <Icon name="user" />
       </div>
     </div>
   )
@@ -82,10 +82,10 @@ function FarmView({ dry, heat, rain }: { dry?: boolean; heat?: boolean; rain?: b
     <div className={`art farm-art ${dry ? 'dry' : ''} ${heat ? 'heat' : ''} ${rain ? 'rainy' : ''}`}>
       <div className="field" />
       <div className="maize">
-        <Icon name="🌽" />
-        <Icon name="🌽" />
-        <Icon name="🌽" />
-        <Icon name="🌽" />
+        <Icon name="maize" />
+        <Icon name="maize" />
+        <Icon name="maize" />
+        <Icon name="maize" />
       </div>
       {rain && <div className="rain-drops" />}
       {heat && <div className="sun-ball" />}
@@ -99,7 +99,7 @@ function SoilView() {
       <div className="layer top" />
       <div className="layer mid" />
       <div className="layer deep" />
-      <div className="root"><Icon name="🌱" /></div>
+      <div className="root"><Icon name="sprout" /></div>
     </div>
   )
 }
@@ -117,10 +117,10 @@ function LabView() {
 function AcademyView() {
   return (
     <div className="art academy-art">
-      <div className="portal"><Icon name="🌽" /></div>
-      <div className="portal"><Icon name="🫘" /></div>
-      <div className="portal"><Icon name="🌾" /></div>
-      <div className="portal"><Icon name="🥜" /></div>
+      <div className="portal"><Icon name="maize" /></div>
+      <div className="portal"><Icon name="bean" /></div>
+      <div className="portal"><Icon name="wheat" /></div>
+      <div className="portal"><Icon name="peanut" /></div>
     </div>
   )
 }
@@ -137,11 +137,11 @@ function StormView() {
 function HarvestView() {
   return (
     <div className="art harvest-art">
-      <div className="basket"><Icon name="🧺" /></div>
+      <div className="basket"><Icon name="basket" /></div>
       <div className="maize">
-        <Icon name="🌽" />
-        <Icon name="🫘" />
-        <Icon name="🌾" />
+        <Icon name="maize" />
+        <Icon name="bean" />
+        <Icon name="wheat" />
       </div>
     </div>
   )
@@ -151,7 +151,7 @@ function NightView() {
   return (
     <div className="art night-art">
       <div className="moon" />
-      <div className="ship-away"><Icon name="🚀" /></div>
+      <div className="ship-away"><Icon name="rocket" /></div>
     </div>
   )
 }
