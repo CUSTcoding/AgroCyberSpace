@@ -49,3 +49,23 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 27 files already formatted
   - `mypy app scripts tests`: Success (0 issues in 24 source files)
+
+---
+
+## Passo 0.3 — Configuração Central, Conectividade de Base de Dados e Endpoint /health
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Implementação de `app/core/config.py` com `pydantic-settings`, `app/core/database.py` com pool e retries resilientes a instâncias cloud suspensas, e endpoints `GET /health` e `GET /api/v1/health` reportando integridade da API, PostgreSQL e PostGIS.
+- **Ficheiros criados/alterados:**
+  - `app/core/config.py`
+  - `app/core/database.py`
+  - `app/main.py`
+  - `tests/test_health.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Mock de propriedade imutável:* tentativa de fazer `patch` direto em `@property sync_database_url` causou `AttributeError` por ausência de deleter no Pydantic -> corrigido testando `get_engine("")` diretamente com `ValueError`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 14 passaram / 0 falhas (tempo: 0.52s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 30 files already formatted
+  - `mypy app scripts tests`: Success (0 issues in 27 source files)
