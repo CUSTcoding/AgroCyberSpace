@@ -282,5 +282,31 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff format --check .`: 69 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 64 source files)
 
+---
+
+## Passo 3.1 — Modelos do Sistema de Jogo e Conteúdo e Migração 0005
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Criação dos modelos ORM fundamentais do jogo (`Chapter`, `Lesson`, `Mission`, `PlayerProgress`, `Achievement`, `UserAchievement`, `RegionContentStatus`), repositórios desacoplados em `app/modules/game/repository.py`, e migração Alembic `0005_create_game_system_tables.py` com índices e chaves estrangeiras.
+- **Ficheiros criados/alterados:**
+  - `app/modules/game/models.py`
+  - `app/modules/game/__init__.py`
+  - `app/modules/game/repository.py`
+  - `migrations/versions/0005_create_game_system_tables.py`
+  - `migrations/env.py`
+  - `tests/test_game_models.py`
+  - `tests/test_migrations.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *IndentationError na definição de classe:* espaços a mais na linha de declaração de `RegionContentStatus` em `models.py` -> corrigido.
+  - *Mypy valid-type shadowing:* método `list` no `AchievementRepository` causava sombreamento da função built-in `list` em assinaturas subsequentes -> qualificado como `builtins.list`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 81 passaram / 0 falhas (tempo: 1.29s)
+  - `alembic heads`: 0005 (head)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 73 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 68 source files)
+
+
 
 

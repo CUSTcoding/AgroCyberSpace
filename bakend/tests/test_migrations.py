@@ -13,9 +13,16 @@ def test_alembic_config_and_revisions() -> None:
     alembic_cfg = Config("alembic.ini")
     script = ScriptDirectory.from_config(alembic_cfg)
 
-    # Verify head revision is 0004
+    # Verify head revision is 0005
     heads = script.get_heads()
-    assert heads == ["0004"]
+    assert heads == ["0005"]
+
+    # Verify revision 0005 metadata
+    rev_0005 = script.get_revision("0005")
+    assert rev_0005 is not None
+    assert rev_0005.down_revision == "0004"
+    assert rev_0005.doc is not None
+    assert "game system tables" in rev_0005.doc.lower()
 
     # Verify revision 0004 metadata
     rev_0004 = script.get_revision("0004")
