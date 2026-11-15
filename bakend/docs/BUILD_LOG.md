@@ -152,3 +152,27 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 48 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 44 source files)
+
+---
+
+## Passo 1.4 — Perfil do Utilizador (/users/me) e Controlo de Permissões (RBAC)
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Implementação das dependências de segurança `get_current_user` e `require_role` em `app/modules/auth/dependencies.py`, schemas e serviço `UserService` para atualização de perfil, e endpoints `GET /users/me`, `PATCH /users/me` e `GET /users/admin/ping`.
+- **Ficheiros criados/alterados:**
+  - `app/modules/auth/dependencies.py`
+  - `app/modules/users/schemas.py`
+  - `app/modules/users/service.py`
+  - `app/modules/users/router.py`
+  - `app/main.py` (montagem do router `/users`)
+  - `tests/test_users_me.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Dependency override generator:* substituição de gerador `get_db` por lambda causava falha na resolução assíncrona; ajustado para função geradora `override_get_db`.
+  - *FastAPI Bearer header parsing no teste:* fixture de teste precisava anotar `HTTPAuthorizationCredentials` com `Depends(http_bearer)` para extração do cabeçalho `Authorization`.
+  - *Ruff F401:* remoção de imports não utilizados em `router.py` e `test_users_me.py`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 38 passaram / 0 falhas (tempo: 1.29s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 53 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 49 source files)
