@@ -9,6 +9,10 @@ dependencies = [
     "uvicorn[standard]>=0.32.0",
     "pydantic>=2.9.2",
     "pydantic-settings>=2.6.0",
+    "sqlalchemy>=2.0.36",
+    "geoalchemy2>=0.17.0",
+    "psycopg[binary]>=3.2.3",
+    "alembic>=1.14.0",
 ]
 
 [dependency-groups]
@@ -46,6 +50,7 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
+explicit_package_bases = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

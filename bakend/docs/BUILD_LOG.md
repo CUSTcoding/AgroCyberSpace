@@ -25,3 +25,27 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff format --check .`: 24 files already formatted
   - `mypy app`: Success (0 issues in 19 source files)
   - `mypy tests`: Success (0 issues in 2 source files)
+
+---
+
+## Passo 0.2 — Configuração de Ambiente e Diagnóstico de BD
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Criação do `.env.example` completo com as variáveis documentadas e implementação do `scripts/check_env.py` para diagnóstico de conectividade com PostgreSQL e PostGIS na cloud com retry automático para instâncias suspensas.
+- **Ficheiros criados/alterados:**
+  - `.env.example`
+  - `scripts/check_env.py`
+  - `scripts/__init__.py`
+  - `tests/test_check_env.py`
+  - `pyproject.toml` (adicionadas dependências: `sqlalchemy`, `geoalchemy2`, `psycopg[binary]`, `alembic`, `explicit_package_bases`)
+  - `uv.lock`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Ruff F541:* f-string sem placeholders em `scripts/check_env.py` -> corrigido para string regular.
+  - *Mypy module resolution:* scripts sem package base -> adicionado `scripts/__init__.py` e `explicit_package_bases = true`.
+  - *Mypy arg-type:* estreitamento de tipos para variáveis de ambiente obrigatórias com `assert`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 6 passaram / 0 falhas (tempo: 0.40s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 27 files already formatted
+  - `mypy app scripts tests`: Success (0 issues in 24 source files)
