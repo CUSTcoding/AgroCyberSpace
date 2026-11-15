@@ -12,6 +12,11 @@ from shapely.geometry import Point, shape
 from sqlalchemy.orm import Session
 
 from app.core.database import get_session_factory
+from app.modules.agriculture.models import DistrictCropStat, SoilUnit
+from app.modules.agriculture.repository import (
+    DistrictCropStatRepository,
+    SoilUnitRepository,
+)
 from app.modules.regions.models import Community, District, Region
 from app.modules.regions.repository import (
     CommunityRepository,
@@ -22,6 +27,7 @@ from app.modules.regions.repository import (
 logger = logging.getLogger(__name__)
 
 SEEDS_AOI_DIR = Path(__file__).resolve().parent.parent / "seeds" / "aoi"
+SEEDS_AGRICULTURE_DIR = Path(__file__).resolve().parent.parent / "seeds" / "agriculture"
 
 # Initial seed registry for confirmed districts and communities
 CONFIRMED_DATA: dict[str, dict[str, Any]] = {
@@ -269,6 +275,112 @@ def seed_regions_and_districts(db: Session, aoi_dir: Path = SEEDS_AOI_DIR) -> di
     return stats
 
 
+def seed_crop_stats(
+    db: Session,
+    file_path: Path = SEEDS_AGRICULTURE_DIR / "crop_stats.json",
+) -> int:
+    """Seed district crop statistics from JSON."""
+    if not file_path.exists():
+        logger.warning("Crop stats seed file not found: %s", file_path)
+        return 0
+
+    with file_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    district_repo = DistrictRepository(db)
+    crop_stat_repo = DistrictCropStatRepository(db)
+    count = 0
+
+    for item in data:
+        dist_code = item["district_code"]
+        district = district_repo.get_by_code(dist_code)
+        if district is None:
+            logger.warning("District '%s' not found for crop stat, skipping", dist_code)
+            continue
+
+        crop = item["crop"]
+        existing = crop_stat_repo.get_by_district_and_crop(district.id, crop)
+        if existing is None:
+            stat = DistrictCropStat(
+                district_id=district.id,
+                crop=crop,
+                area_ha=float(item.get("area_ha", 0.0)),
+                production_t=float(item.get("production_t", 0.0)),
+                campaign=item.get("campaign", "2023/2024"),
+                year=int(item.get("year", 2023)),
+                source=item.get("source", "INE/MADER - CAP 2023/2024"),
+            )
+            crop_stat_repo.create(stat)
+            count += 1
+            logger.info("Created CropStat: %s (%s ha) in %s", crop, stat.area_ha, district.name)
+        else:
+            existing.area_ha = float(item.get("area_ha", 0.0))
+            existing.production_t = float(item.get("production_t", 0.0))
+            existing.campaign = item.get("campaign", "2023/2024")
+            existing.year = int(item.get("year", 2023))
+            existing.source = item.get("source", "INE/MADER - CAP 2023/2024")
+            db.commit()
+            db.refresh(existing)
+
+    return count
+
+
+def seed_soil_units(
+    db: Session,
+    file_path: Path = SEEDS_AGRICULTURE_DIR / "soil_units.json",
+) -> int:
+    """Seed national soil units (INIA 1995) from JSON."""
+    if not file_path.exists():
+        logger.warning("Soil units seed file not found: %s", file_path)
+        return 0
+
+    with file_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    soil_repo = SoilUnitRepository(db)
+    count = 0
+
+    for item in data:
+        code = item["code"]
+        name = item["name"]
+        description = item.get("description")
+        properties = item.get("properties", {})
+        source = item.get("source", "INIA/IIAM 1995")
+        year = int(item.get("year", 1995))
+
+        geom_dict = item.get("geometry")
+        boundary_geom = None
+        if geom_dict:
+            shapely_geom = shape(geom_dict)
+            boundary_geom = from_shape(shapely_geom, srid=4326)
+
+        existing = soil_repo.get_by_code(code)
+        if existing is None:
+            unit = SoilUnit(
+                code=code,
+                name=name,
+                description=description,
+                properties=properties,
+                source=source,
+                year=year,
+                boundary=boundary_geom,
+            )
+            soil_repo.create(unit)
+            count += 1
+            logger.info("Created SoilUnit: %s (%s)", name, code)
+        else:
+            existing.name = name
+            existing.description = description
+            existing.properties = properties
+            existing.source = source
+            existing.year = year
+            existing.boundary = boundary_geom
+            db.commit()
+            db.refresh(existing)
+
+    return count
+
+
 def main() -> None:
     """CLI entrypoint for executing seed script."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -277,6 +389,10 @@ def main() -> None:
     db = session_factory()
     try:
         results = seed_regions_and_districts(db)
+        crop_count = seed_crop_stats(db)
+        soil_count = seed_soil_units(db)
+        results["crop_stats_seeded"] = crop_count
+        results["soil_units_seeded"] = soil_count
         logger.info("Seeding completed successfully: %s", results)
     finally:
         db.close()

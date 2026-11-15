@@ -1,0 +1,92 @@
+[
+  {
+    "code": "AL-01",
+    "name": "Solos Aluvionares do Vale do Limpopo",
+    "description": "Solos de origem sedimentar recente formados por aluviões do Rio Limpopo, com textura franco-argilosa a argilosa pesada, boa fertilidade química natural e capacidade de retenção hídrica adequada para regadio.",
+    "source": "INIA/IIAM 1995",
+    "year": 1995,
+    "properties": {
+      "texture": "argilosa",
+      "drainage": "moderada a imperfeita",
+      "ph_range": "6.5 - 7.8",
+      "depth_cm": 150,
+      "organic_matter": "media",
+      "natural_fertility": "alta",
+      "primary_suitability": ["arroz", "milho", "tomate", "feijao"]
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [32.88, -24.35],
+          [33.22, -24.35],
+          [33.30, -24.58],
+          [33.15, -24.80],
+          [32.82, -24.80],
+          [32.75, -24.52],
+          [32.88, -24.35]
+        ]
+      ]
+    }
+  },
+  {
+    "code": "FR-02",
+    "name": "Solos Franco-Argilosos do Licungo",
+    "description": "Solos de textura média a pesada desenvolvidos sobre rochas do embasamento cristalino e sedimentos fluviais da bacia do Licungo, moderadamente profundos com drenagem geralmente boa.",
+    "source": "INIA/IIAM 1995",
+    "year": 1995,
+    "properties": {
+      "texture": "franco-argilosa",
+      "drainage": "boa",
+      "ph_range": "5.5 - 6.5",
+      "depth_cm": 120,
+      "organic_matter": "media a baixa",
+      "natural_fertility": "moderada",
+      "primary_suitability": ["mandioca", "milho", "feijao_boer", "gergelim"]
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [36.80, -16.55],
+          [37.20, -16.55],
+          [37.35, -16.82],
+          [37.15, -17.15],
+          [36.70, -17.15],
+          [36.60, -16.82],
+          [36.80, -16.55]
+        ]
+      ]
+    }
+  },
+  {
+    "code": "FE-03",
+    "name": "Solos Ferralíticos Vermelhos de Angónia",
+    "description": "Solos vermelhos profundos e friáveis de planalto de alta fertilidade natural aparente, altamente porosos, com excelente capacidade de arejamento e retenção de humidade nas altitudes de Angónia.",
+    "source": "INIA/IIAM 1995",
+    "year": 1995,
+    "properties": {
+      "texture": "argilosa friavel",
+      "drainage": "muito boa",
+      "ph_range": "5.8 - 6.8",
+      "depth_cm": 180,
+      "organic_matter": "alta",
+      "natural_fertility": "alta",
+      "primary_suitability": ["batata", "milho", "feijao", "soja", "trigo"]
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [34.15, -14.45],
+          [34.70, -14.45],
+          [34.80, -14.78],
+          [34.55, -15.15],
+          [34.00, -15.15],
+          [33.90, -14.78],
+          [34.15, -14.45]
+        ]
+      ]
+    }
+  }
+]

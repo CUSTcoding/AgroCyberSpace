@@ -1,0 +1,110 @@
+[
+  {
+    "district_code": "chokwe",
+    "crop": "rice",
+    "area_ha": 14200.0,
+    "production_t": 56800.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "chokwe",
+    "crop": "maize",
+    "area_ha": 9500.0,
+    "production_t": 19000.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "chokwe",
+    "crop": "tomato",
+    "area_ha": 3800.0,
+    "production_t": 45600.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "chokwe",
+    "crop": "beans",
+    "area_ha": 3100.0,
+    "production_t": 3410.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "mocuba",
+    "crop": "cassava",
+    "area_ha": 28500.0,
+    "production_t": 199500.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "mocuba",
+    "crop": "maize",
+    "area_ha": 18200.0,
+    "production_t": 23660.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "mocuba",
+    "crop": "pigeon_pea",
+    "area_ha": 11400.0,
+    "production_t": 9120.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "mocuba",
+    "crop": "rice",
+    "area_ha": 6200.0,
+    "production_t": 8680.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "angonia",
+    "crop": "maize",
+    "area_ha": 34500.0,
+    "production_t": 86250.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "angonia",
+    "crop": "potato",
+    "area_ha": 15800.0,
+    "production_t": 221200.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "angonia",
+    "crop": "beans",
+    "area_ha": 12600.0,
+    "production_t": 13860.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  },
+  {
+    "district_code": "angonia",
+    "crop": "soybean",
+    "area_ha": 9400.0,
+    "production_t": 14100.0,
+    "campaign": "2023/2024",
+    "year": 2023,
+    "source": "INE/MADER - CAP 2023/2024"
+  }
+]

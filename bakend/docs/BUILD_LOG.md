@@ -253,4 +253,34 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff format --check .`: 65 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 60 source files)
 
+---
+
+## Passo 2.4 — Estatísticas Agrícolas Distritais (CAP 2023/2024) e Solos Nacionais (INIA 1995)
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Implementação dos modelos ORM `DistrictCropStat` e `SoilUnit`, repositórios desacoplados com conformidade às regras científicas (regra 9: apenas culturas com `area_ha > 0`), migração Alembic `0004` com índices GIST espaciais na camada pedológica, registo de fontes e licenças em `docs/DATA_SOURCES.md`, e seeds canónicos em `seeds/agriculture/`.
+- **Ficheiros criados/alterados:**
+  - `app/modules/agriculture/models.py`
+  - `app/modules/agriculture/__init__.py`
+  - `app/modules/agriculture/repository.py`
+  - `migrations/versions/0004_create_district_crop_stats_and_soil_units.py`
+  - `migrations/env.py`
+  - `docs/DATA_SOURCES.md`
+  - `seeds/agriculture/crop_stats.json`
+  - `seeds/agriculture/soil_units.json`
+  - `scripts/seed.py`
+  - `tests/test_agriculture_models.py`
+  - `tests/test_migrations.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Mock side_effect StopIteration:* `test_seed_crop_stats_function` esgotava tuplo fixo de mocks antes dos 12 registos do JSON -> substituído por função de contagem dinâmica `mock_first()`.
+  - *NameError Any:* importação de `Any` em falta em `tests/test_agriculture_models.py` -> adicionado no cabeçalho.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 68 passaram / 0 falhas (tempo: 1.98s)
+  - `alembic heads`: 0004 (head)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 69 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 64 source files)
+
+
 
