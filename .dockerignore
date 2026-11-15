@@ -1,0 +1,66 @@
+# ==============================================================================
+# AgroSight Root .dockerignore
+# ==============================================================================
+
+# Git repository metadata
+.git/
+.github/
+.gitignore
+.gitattributes
+
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python virtualenvs, caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+env/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node.js dependencies, build outputs and caches
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.pnpm-store/
+.vite/
+dist/
+dist-ssr/
+
+# Geospatial rasters and local object storage
+storage/*
+!storage/.gitkeep
+apps/backend/storage/*
+!apps/backend/storage/.gitkeep
+*.tif
+*.tiff
+*.cog
+*.geotiff
+*.h5
+*.nc
+*.nc4
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Documentation and temporary build logs
+docs/
+*.md
+!README.md
