@@ -28,10 +28,16 @@ class RegionRepository:
         stmt = select(Region).where(func.lower(Region.code) == func.lower(code.strip()))
         return self.db.scalars(stmt).first()
 
-    def list(self) -> list[Region]:
-        """List all study regions."""
-        stmt = select(Region).order_by(Region.name.asc())
+    def list(self, limit: int = 100, offset: int = 0) -> list[Region]:
+        """List study regions with pagination."""
+        stmt = select(Region).order_by(Region.name.asc()).limit(limit).offset(offset)
         return list(self.db.scalars(stmt).all())
+
+    def count(self) -> int:
+        """Total count of regions."""
+        stmt = select(func.count(Region.id))
+        result = self.db.execute(stmt).scalar()
+        return int(result or 0)
 
     def create(self, region: Region) -> Region:
         """Persist a new region entity."""
@@ -86,10 +92,24 @@ class DistrictRepository:
         stmt = select(District).where(func.lower(District.code) == func.lower(code.strip()))
         return self.db.scalars(stmt).first()
 
-    def list_by_region(self, region_id: uuid.UUID) -> list[District]:
-        """List all districts belonging to a region."""
-        stmt = select(District).where(District.region_id == region_id).order_by(District.name.asc())
+    def list_by_region(
+        self, region_id: uuid.UUID, limit: int = 100, offset: int = 0
+    ) -> list[District]:
+        """List districts belonging to a region with pagination."""
+        stmt = (
+            select(District)
+            .where(District.region_id == region_id)
+            .order_by(District.name.asc())
+            .limit(limit)
+            .offset(offset)
+        )
         return list(self.db.scalars(stmt).all())
+
+    def count_by_region(self, region_id: uuid.UUID) -> int:
+        """Total count of districts in a region."""
+        stmt = select(func.count(District.id)).where(District.region_id == region_id)
+        result = self.db.execute(stmt).scalar()
+        return int(result or 0)
 
     def create(self, district: District) -> District:
         """Persist a new district entity."""
@@ -141,14 +161,42 @@ class CommunityRepository:
         stmt = select(Community).where(Community.id == community_id)
         return self.db.scalars(stmt).first()
 
-    def list_by_district(self, district_id: uuid.UUID) -> list[Community]:
-        """List all communities in a district."""
+    def list_by_district(
+        self, district_id: uuid.UUID, limit: int = 100, offset: int = 0
+    ) -> list[Community]:
+        """List communities in a district with pagination."""
         stmt = (
             select(Community)
             .where(Community.district_id == district_id)
             .order_by(Community.name.asc())
+            .limit(limit)
+            .offset(offset)
         )
         return list(self.db.scalars(stmt).all())
+
+    def list_by_region(
+        self, region_id: uuid.UUID, limit: int = 100, offset: int = 0
+    ) -> list[Community]:
+        """List all communities in all districts of a region."""
+        stmt = (
+            select(Community)
+            .join(District, Community.district_id == District.id)
+            .where(District.region_id == region_id)
+            .order_by(Community.name.asc())
+            .limit(limit)
+            .offset(offset)
+        )
+        return list(self.db.scalars(stmt).all())
+
+    def count_by_region(self, region_id: uuid.UUID) -> int:
+        """Count all communities belonging to districts of a region."""
+        stmt = (
+            select(func.count(Community.id))
+            .join(District, Community.district_id == District.id)
+            .where(District.region_id == region_id)
+        )
+        result = self.db.execute(stmt).scalar()
+        return int(result or 0)
 
     def create(self, community: Community) -> Community:
         """Persist a new community entity."""

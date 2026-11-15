@@ -230,3 +230,27 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff format --check .`: 61 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 56 source files)
 
+---
+
+## Passo 2.3 — Endpoints de Regiões, Distritos, Comunidades e Mapa GeoJSON
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Implementação dos schemas Pydantic v2 paginados (`items`, `total`, `limit`, `offset`), serviço de domínio `RegionService`, router FastAPI em `/api/v1/regions`, e endpoints: `GET /regions`, `GET /regions/{id}`, `GET /regions/{id}/districts`, `GET /regions/{id}/communities` e `GET /regions/{id}/map` (GeoJSON Feature).
+- **Ficheiros criados/alterados:**
+  - `app/modules/regions/schemas.py`
+  - `app/modules/regions/service.py`
+  - `app/modules/regions/router.py`
+  - `app/modules/regions/repository.py`
+  - `app/main.py` (montagem de `regions_router`)
+  - `tests/test_regions_endpoints.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *FastAPI dependency resolution sem BD:* teste de UUID inválido falhava antes da validação porque `get_db` tentava aceder a `DATABASE_URL` não configurada -> configurado mock explícito na fixture de teste.
+  - *Ruff E501:* strings de descrição em schemas e router excediam 100 caracteres -> quebradas em tuplos de strings.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 61 passaram / 0 falhas (tempo: 1.17s)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 65 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 60 source files)
+
+

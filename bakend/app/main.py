@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from app.core.config import settings
 from app.core.database import check_db_health
 from app.modules.auth.router import router as auth_router
+from app.modules.regions.router import router as regions_router
 from app.modules.users.router import router as users_router
 from app.shared.exceptions import AppException
 
@@ -69,6 +70,7 @@ app.add_middleware(
 # Mount API Routers
 app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
 app.include_router(users_router, prefix=settings.API_V1_PREFIX)
+app.include_router(regions_router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/")
