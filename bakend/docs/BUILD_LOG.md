@@ -176,3 +176,29 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 53 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 49 source files)
+
+---
+
+## Passo 2.1 — Modelos Geoespaciais (regions, districts, communities) e Migração com Índices GIST
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Criação dos modelos ORM `Region`, `District` e `Community` com GeoAlchemy2 (SRID 4326), repositórios desacoplados com extração GeoJSON via `ST_AsGeoJSON`, e migração Alembic `0003_create_regions_districts_communities.py` com índices GIST espaciais e FK `users.selected_region_id`.
+- **Ficheiros criados/alterados:**
+  - `app/modules/regions/models.py`
+  - `app/modules/regions/__init__.py`
+  - `app/modules/regions/repository.py`
+  - `migrations/versions/0003_create_regions_districts_communities.py`
+  - `migrations/env.py`
+  - `tests/test_regions_model.py`
+  - `tests/test_migrations.py`
+  - `pyproject.toml` (adicionado `shapely`)
+  - `uv.lock`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Ruff E501:* quebra de linha em docstring e string GeoJSON longa em `repository.py` e `test_regions_model.py`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 45 passaram / 0 falhas (tempo: 1.48s)
+  - `alembic heads`: 0003 (head)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 57 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 53 source files)

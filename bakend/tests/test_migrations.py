@@ -13,9 +13,16 @@ def test_alembic_config_and_revisions() -> None:
     alembic_cfg = Config("alembic.ini")
     script = ScriptDirectory.from_config(alembic_cfg)
 
-    # Verify head revision is 0002
+    # Verify head revision is 0003
     heads = script.get_heads()
-    assert heads == ["0002"]
+    assert heads == ["0003"]
+
+    # Verify revision 0003 metadata
+    rev_0003 = script.get_revision("0003")
+    assert rev_0003 is not None
+    assert rev_0003.down_revision == "0002"
+    assert rev_0003.doc is not None
+    assert "regions" in rev_0003.doc.lower()
 
     # Verify revision 0002 metadata
     rev_0002 = script.get_revision("0002")
