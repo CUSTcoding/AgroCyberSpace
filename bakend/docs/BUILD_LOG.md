@@ -95,3 +95,31 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff check .`: All checks passed!
   - `ruff format --check .`: 36 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 33 source files)
+
+---
+
+## Passo 1.1 — Modelo User, Repositório e Migração da Tabela users
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Criação do modelo ORM `User` (com UUID como chave primária, email único, hash de senha, role padrão 'player', idioma de preferência e timestamps UTC), repositório desacoplado `UserRepository` e migração Alembic `0002_create_users_table.py`.
+- **Ficheiros criados/alterados:**
+  - `app/modules/users/models.py`
+  - `app/modules/users/__init__.py`
+  - `app/modules/users/repository.py`
+  - `migrations/versions/0002_create_users_table.py`
+  - `migrations/env.py`
+  - `tests/test_users_model.py`
+  - `tests/test_migrations.py`
+  - `pyproject.toml` (adicionados `argon2-cffi` e `pyjwt[crypto]`)
+  - `uv.lock`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Alembic heads assertion:* teste de migração esperava apenas revisão 0001; atualizado para cadeia sequencial 0001 -> 0002 (head).
+  - *Valores padrão em memória no ORM:* instanciação do modelo `User` sem passagem explícita de `role` retornava `None` em memória antes do commit; implementado construtor `__init__` que inicializa os defaults (`role='player'`, `preferred_language='pt'`, `is_active=True`, timestamps UTC).
+  - *Ruff UP017 & I001:* modernização para `datetime.UTC` (Python 3.12) e ordenação de imports no `migrations/env.py`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 22 passaram / 0 falhas (tempo: 0.22s)
+  - `alembic heads`: 0002 (head)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 41 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 37 source files)

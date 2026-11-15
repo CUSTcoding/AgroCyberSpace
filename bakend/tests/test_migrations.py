@@ -13,16 +13,23 @@ def test_alembic_config_and_revisions() -> None:
     alembic_cfg = Config("alembic.ini")
     script = ScriptDirectory.from_config(alembic_cfg)
 
-    # Verify head revision is 0001
+    # Verify head revision is 0002
     heads = script.get_heads()
-    assert heads == ["0001"]
+    assert heads == ["0002"]
+
+    # Verify revision 0002 metadata
+    rev_0002 = script.get_revision("0002")
+    assert rev_0002 is not None
+    assert rev_0002.down_revision == "0001"
+    assert rev_0002.doc is not None
+    assert "users" in rev_0002.doc.lower()
 
     # Verify revision 0001 metadata
-    rev = script.get_revision("0001")
-    assert rev is not None
-    assert rev.down_revision is None
-    assert rev.doc is not None
-    assert "postgis" in rev.doc.lower()
+    rev_0001 = script.get_revision("0001")
+    assert rev_0001 is not None
+    assert rev_0001.down_revision is None
+    assert rev_0001.doc is not None
+    assert "postgis" in rev_0001.doc.lower()
 
 
 def test_migration_0001_has_upgrade_and_downgrade() -> None:
