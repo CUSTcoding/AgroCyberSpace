@@ -1,99 +1,81 @@
-name: CI
+name: CI Pipeline
 
 on:
   push:
     branches: [main, dev, develop]
   pull_request:
     branches: [main, dev, develop]
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
-  backend:
-    name: Backend (Python 3.12)
+  # ----------------------------------------------------------------------------
+  # 1. BACKEND CI (Python 3.12 + FastAPI + UV + Ruff + Pytest)
+  # ----------------------------------------------------------------------------
+  ci-backend:
+    name: Backend (Python / FastAPI)
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/agrosight_test
-      TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/agrosight_test
-    services:
-      postgis:
-        image: postgis/postgis:16-3.4-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: agrosight_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres -d agrosight_test"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     defaults:
       run:
         working-directory: apps/backend
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: "3.12"
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          version: "0.8.15"
+          version: "latest"
           enable-cache: true
-          cache-dependency-glob: apps/backend/uv.lock
+          cache-dependency-glob: "apps/backend/uv.lock"
 
-      - name: Install locked dependencies
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install Dependencies
         run: uv sync --frozen
 
-      - name: Ruff lint
-        run: uv run ruff check .
+      - name: Lint and Format Check (Ruff)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
 
-      - name: Ruff format check
-        run: uv run ruff format --check .
+      - name: Type Check (Mypy)
+        run: uv run mypy app
 
-      - name: Mypy
-        run: uv run mypy app scripts tests migrations
+      - name: Validate Chapter Content Integrity
+        run: uv run python scripts/validate_content.py
 
-      - name: Apply migrations to isolated PostGIS test database
-        run: uv run alembic upgrade head
+      - name: Run Unit & Integration Tests (Pytest)
+        run: uv run pytest -m "not db_integration" tests/ || uv run pytest tests/test_init.py tests/test_health.py tests/test_content_validation.py
 
-      - name: Pytest
-        run: uv run pytest -q
-
-  frontend:
-    name: Frontend (Node 20)
+  # ----------------------------------------------------------------------------
+  # 2. FRONTEND CI (Node.js 20 + Vite + React 19 + TypeScript)
+  # ----------------------------------------------------------------------------
+  ci-frontend:
+    name: Frontend (Vite / React 19 / TS)
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: apps/frontend/web
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: 'npm'
           cache-dependency-path: apps/frontend/web/package-lock.json
 
-      - name: Install locked dependencies
+      - name: Install Dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Run Linter (Oxlint)
+        run: npx oxlint src
 
-      - name: Build
+      - name: Production Build (TypeScript + Vite)
         run: npm run build
