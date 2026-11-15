@@ -1,0 +1,61 @@
+{
+  "chapter_number": 6,
+  "title": "Capítulo 6 (título a definir — Escolha das Melhores Culturas)",
+  "learning_objective": "Desenvolver competências agronómicas sobre escolha das melhores culturas em Tete.",
+  "is_common": false,
+  "region_code": "tete",
+  "provisional": true,
+  "topics": [
+    "crops"
+  ],
+  "lessons": [
+    {
+      "position": 1,
+      "topic": "crops",
+      "title": "Lição 1: Compreender Crops em Tete",
+      "text_simple": "Na região de Tete, observar os sinais do tempo e do solo ajuda a proteger a colheita.",
+      "audio_text": "Presta atenção aos ensinamentos dos antepassados e aos sinais da terra em Tete.",
+      "learning_points": [
+        "Observar o solo com regularidade",
+        "Comparar a observação local com os sinais regionais"
+      ],
+      "evidence": {
+        "baseline_period": "1991-2020",
+        "region": "Tete"
+      },
+      "source": "IIAM / Serviços Provinciais de Agricultura / Calendário Agrícola Oficial",
+      "verified": false,
+      "is_synthetic": false,
+      "language": "pt"
+    }
+  ],
+  "missions": [
+    {
+      "position": 1,
+      "mission_type": "choose_crop",
+      "title": "Desafio 1: Decisão Prática de Crops (Tete)",
+      "prompt_simple": "Com base nas condições observadas em Tete, que decisão deves tomar?",
+      "learning_note": "Uma decisão informada sobre crops reduz os riscos da época agrícola.",
+      "max_score": 100,
+      "configuration": {
+        "region": "tete",
+        "options": [
+          "Opção A: Avançar",
+          "Opção B: Aguardar mais humidade",
+          "Opção C: Trocar de parcela"
+        ]
+      },
+      "answer_rules": {
+        "recommended_choice": "Opção B: Aguardar mais humidade",
+        "score_breakdown": {
+          "Opção B: Aguardar mais humidade": 100,
+          "Opção A: Avançar": 40,
+          "Opção C: Trocar de parcela": 60
+        }
+      },
+      "verified": false,
+      "is_synthetic": false,
+      "language": "pt"
+    }
+  ]
+}

@@ -17,6 +17,18 @@ from app.modules.agriculture.repository import (
     DistrictCropStatRepository,
     SoilUnitRepository,
 )
+from app.modules.game.models import (
+    Chapter,
+    Lesson,
+    Mission,
+    RegionContentStatus,
+)
+from app.modules.game.repository import (
+    ChapterRepository,
+    LessonRepository,
+    MissionRepository,
+    RegionContentStatusRepository,
+)
 from app.modules.regions.models import Community, District, Region
 from app.modules.regions.repository import (
     CommunityRepository,
@@ -28,6 +40,7 @@ logger = logging.getLogger(__name__)
 
 SEEDS_AOI_DIR = Path(__file__).resolve().parent.parent / "seeds" / "aoi"
 SEEDS_AGRICULTURE_DIR = Path(__file__).resolve().parent.parent / "seeds" / "agriculture"
+SEEDS_CONTENT_DIR = Path(__file__).resolve().parent.parent / "seeds" / "content"
 
 # Initial seed registry for confirmed districts and communities
 CONFIRMED_DATA: dict[str, dict[str, Any]] = {
@@ -381,6 +394,154 @@ def seed_soil_units(
     return count
 
 
+def seed_chapters_and_content(
+    db: Session,
+    content_dir: Path = SEEDS_CONTENT_DIR,
+) -> dict[str, int]:
+    """Idempotently seed all 12 chapters, lessons, missions, and region content statuses."""
+    chapter_repo = ChapterRepository(db)
+    lesson_repo = LessonRepository(db)
+    mission_repo = MissionRepository(db)
+    region_repo = RegionRepository(db)
+    status_repo = RegionContentStatusRepository(db)
+
+    stats = {
+        "chapters_seeded": 0,
+        "lessons_seeded": 0,
+        "missions_seeded": 0,
+        "statuses_seeded": 0,
+    }
+
+    if not content_dir.exists():
+        logger.warning("Content directory not found: %s", content_dir)
+        return stats
+
+    json_files = sorted(content_dir.glob("*/*.json"))
+    for file_path in json_files:
+        with file_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        ch_num = int(data["chapter_number"])
+        title = data["title"]
+        objective = data["learning_objective"]
+        is_common = bool(data.get("is_common", False))
+        topics = data.get("topics", [])
+        provisional = bool(data.get("provisional", True))
+        region_code = data.get("region_code")
+
+        # 1. Upsert Chapter
+        chapter = chapter_repo.get_by_number(ch_num)
+        if chapter is None:
+            chapter = Chapter(
+                chapter_number=ch_num,
+                title=title,
+                learning_objective=objective,
+                is_common=is_common,
+                topics=topics,
+                provisional=provisional,
+            )
+            chapter_repo.create(chapter)
+            stats["chapters_seeded"] += 1
+            logger.info("Created Chapter #%d: %s", ch_num, title)
+        else:
+            chapter.title = title
+            chapter.learning_objective = objective
+            chapter.is_common = is_common
+            chapter.topics = topics
+            chapter.provisional = provisional
+            db.commit()
+            db.refresh(chapter)
+
+        # Determine target region if regional content
+        target_region = None
+        if not is_common and region_code and region_code != "common":
+            target_region = region_repo.get_by_code(region_code)
+
+        region_id = target_region.id if target_region else None
+
+        # 2. Seed Lessons
+        lessons_data = data.get("lessons", [])
+        existing_lessons = {
+            (les.position, les.title.lower()): les
+            for les in lesson_repo.list_by_chapter_and_region(chapter.id, region_id)
+        }
+        for l_data in lessons_data:
+            pos = int(l_data.get("position", 1))
+            l_title = l_data["title"]
+            key = (pos, l_title.lower())
+            if key not in existing_lessons:
+                lesson = Lesson(
+                    chapter_id=chapter.id,
+                    region_id=region_id,
+                    position=pos,
+                    topic=l_data["topic"],
+                    title=l_title,
+                    text_simple=l_data["text_simple"],
+                    audio_text=l_data["audio_text"],
+                    learning_points=l_data.get("learning_points", []),
+                    evidence=l_data.get("evidence", {}),
+                    source=l_data["source"],
+                    verified=bool(l_data.get("verified", False)),
+                    is_synthetic=bool(l_data.get("is_synthetic", False)),
+                    language=l_data.get("language", "pt"),
+                )
+                lesson_repo.create(lesson)
+                stats["lessons_seeded"] += 1
+                logger.info("Created Lesson: %s (ch=%d)", l_title, ch_num)
+
+        # 3. Seed Missions
+        missions_data = data.get("missions", [])
+        existing_missions = {
+            (m.position, m.title.lower()): m
+            for m in mission_repo.list_by_chapter_and_region(chapter.id, region_id)
+        }
+        for m_data in missions_data:
+            pos = int(m_data.get("position", 1))
+            m_title = m_data["title"]
+            key = (pos, m_title.lower())
+            if key not in existing_missions:
+                mission = Mission(
+                    chapter_id=chapter.id,
+                    region_id=region_id,
+                    position=pos,
+                    mission_type=m_data["mission_type"],
+                    title=m_title,
+                    prompt_simple=m_data["prompt_simple"],
+                    learning_note=m_data["learning_note"],
+                    max_score=int(m_data.get("max_score", 100)),
+                    configuration=m_data.get("configuration", {}),
+                    answer_rules=m_data.get("answer_rules", {}),
+                    verified=bool(m_data.get("verified", False)),
+                    is_synthetic=bool(m_data.get("is_synthetic", False)),
+                    language=m_data.get("language", "pt"),
+                )
+                mission_repo.create(mission)
+                stats["missions_seeded"] += 1
+                logger.info("Created Mission: %s (ch=%d)", m_title, ch_num)
+
+        # 4. Upsert RegionContentStatus if target region exists
+        if target_region is not None:
+            status_obj = status_repo.get_status(target_region.id, chapter.id)
+            if status_obj is None:
+                status_obj = RegionContentStatus(
+                    region_id=target_region.id,
+                    chapter_id=chapter.id,
+                    lessons_total=len(lessons_data),
+                    lessons_verified=sum(1 for les in lessons_data if les.get("verified")),
+                    missions_total=len(missions_data),
+                    status="draft",
+                )
+                status_repo.save(status_obj)
+                stats["statuses_seeded"] += 1
+            else:
+                status_obj.lessons_total = len(lessons_data)
+                status_obj.lessons_verified = sum(1 for les in lessons_data if les.get("verified"))
+                status_obj.missions_total = len(missions_data)
+                status_repo.save(status_obj)
+
+    return stats
+
+
 def main() -> None:
     """CLI entrypoint for executing seed script."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -391,8 +552,10 @@ def main() -> None:
         results = seed_regions_and_districts(db)
         crop_count = seed_crop_stats(db)
         soil_count = seed_soil_units(db)
+        content_stats = seed_chapters_and_content(db)
         results["crop_stats_seeded"] = crop_count
         results["soil_units_seeded"] = soil_count
+        results.update(content_stats)
         logger.info("Seeding completed successfully: %s", results)
     finally:
         db.close()

@@ -307,6 +307,29 @@ Registo sequencial e detalhado do desenvolvimento de cada passo do backend.
   - `ruff format --check .`: 73 files already formatted
   - `mypy app scripts tests migrations`: Success (0 issues in 68 source files)
 
+---
+
+## Passo 3.2 — Seeds dos 12 Capítulos, Validador de Conteúdo e Loader Idempotente
+- **Data:** 2026-11-15
+- **Estado:** ✅ Concluído
+- **Objetivo:** Geração de seeds JSON para os 12 capítulos em `seeds/content/` (capítulos 1 e 2 comuns; 3 a 11 regionais com provisório=true, exceto capítulo 4 de Gaza "The Hidden Water"; capítulo 12 final regional), implementação do validador formal de conteúdo `scripts/validate_content.py` contra regras científicas e agronómicas, e loader idempotente `seed_chapters_and_content` em `scripts/seed.py`.
+- **Ficheiros criados/alterados:**
+  - `scripts/validate_content.py`
+  - `seeds/content/1/common.json` a `seeds/content/12/*.json` (32 ficheiros canónicos de capítulos)
+  - `scripts/seed.py` (função `seed_chapters_and_content`)
+  - `tests/test_content_validation.py`
+  - `docs/BUILD_LOG.md`
+- **Erros e Correções:**
+  - *Ruff E741 ambiguous variable name:* nome de variável `l` em dict comprehensions substituído por `les`.
+  - *Ruff E501:* formatação quebrada na mensagem de tipos permitidos em `validate_content.py`.
+- **Resultado dos Testes e Linters:**
+  - `pytest`: 89 passaram / 0 falhas (tempo: 2.12s)
+  - `validate_content.py`: 32/32 ficheiros válidos (0 falhas)
+  - `ruff check .`: All checks passed!
+  - `ruff format --check .`: 75 files already formatted
+  - `mypy app scripts tests migrations`: Success (0 issues in 70 source files)
+
+
 
 
 
