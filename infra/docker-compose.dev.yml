@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      args:
+        UV_SYNC_ARGS: ""
+    command:
+      - uv
+      - run
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --reload
+    volumes:
+      - ../apps/backend:/app
+      - backend_venv:/app/.venv
+      - backend_storage:/app/storage
+
+volumes:
+  backend_venv:
